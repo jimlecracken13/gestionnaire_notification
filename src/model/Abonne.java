@@ -5,8 +5,8 @@ import interfaces.Observer;
 public class Abonne extends Employe implements Observer
 {
     //constructeur de la classe
-    public Abonne(String nom, String prenom, String email) {
-        super(nom, prenom, email);
+    public Abonne(String nom, String prenom, String email, String motDePasse) {
+        super(nom, prenom, email, motDePasse);
     }
     public void envoyerMessage(Message message)
     {

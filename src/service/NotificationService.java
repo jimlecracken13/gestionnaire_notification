@@ -1,6 +1,7 @@
 package service;
 
 import model.Abonne;
+import model.Employe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +11,12 @@ public class NotificationService implements interfaces.NotificationService
     List<Abonne> listAbonne = new ArrayList<>();
     //ajouter à la liste des abonnées
     @Override
-    public void sabonner(Abonne newAbonne) {
-        listAbonne.add(newAbonne);
+    public void sabonner(Employe newAbonne)
+    {
+        Abonne abonne =
+                new Abonne(newAbonne.getNom(),newAbonne.getPrenom(),newAbonne.getEmail(), newAbonne.getMotDePasse());
+        listAbonne.add(abonne);
+        System.out.println(listAbonne);
     }
 
     //retirer un abonné de la liste des abonnées

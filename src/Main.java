@@ -1,6 +1,11 @@
 
 
+import model.Employe;
+import model.Message;
 import service.NotificationService;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import static utils.Utils.estEmailValide;
 
@@ -20,8 +25,13 @@ public class Main
 
         int choice;
         boolean correct = false;
-
-
+        List<Employe> employeList = new ArrayList<>();
+        Employe employe = new Employe("diallo","amadou","jimlecracken13@gmail.com"
+                ,"blablacar");
+        Employe employe1 = new Employe("touré", "ousmane", "ousbi@gmail.com",
+                "DestinationFinale");
+        employeList.add(employe);
+        employeList.add(employe1);
         //verifier les informations saisies
         do {
             //saisi des informations de l'employé
@@ -41,37 +51,69 @@ public class Main
             }
         }while(!correct && essai>=1);
 
+        //checker si l'employe existe
+        if(getEmploye(employeList,email,motDePasse)!=null)
+        {
+            Employe e = getEmploye(employeList,email,motDePasse);
+            System.out.print("Bienvenue dans notre service de notification");
+            do {
 
-        System.out.print("Bienvenue dans notre service de notification");
-        do {
+                System.out.println("Entrez un chiffre");
+                System.out.println("1 : S'abonner");
+                System.out.println("2 : Se désabonner");
+                System.out.println("3 : Afficher mes notifications");
+                System.out.println("4 : Envoyer un message");
+                System.out.println("0 : Se déconnecter");
+                choice = entre.nextInt();
+                switch (choice)
+                {
+                    case 1:
+                        service.sabonner(e);
+                        break;
+                    case 2:
+                        // service.seDesabonner();
+                        break;
+                    case 3:
+                        System.out.print("choix 3");
+                        break;
+                    case 4:
+                        System.out.print("choix 4");
+                        break;
+                    case 0:
+                        System.out.print("Au revoir");
+                        break;
+                    default:
+                        System.out.print("Choix invalide");
+                        break;
+                }
+            }while(choice != 0);
+        }
+        else
+        {
+            System.out.println("Nous n'avons pas pu retrouver l'utilisateur" +
+                    "Veillez verifier l'email et le password");
+        }
 
-            System.out.println("Entrez un chiffre");
-            System.out.println("1 pour s'abonner");
-            System.out.println("2 pour se désabonner");
-            System.out.println("3 pour afficher mes notifications");
-            System.out.println("4 pour Envoyer un message");
-            System.out.println("0 pour quitter");
-            choice = entre.nextInt();
-            switch (choice)
+
+
+    }
+
+    //recuperer l'employer connecter
+    public static Employe getEmploye(List<Employe> employeList, String email, String motDePasse)
+    {
+        for(Employe e : employeList)
+        {
+            if(e.getEmail().equals(email) && e.getMotDePasse().equals(motDePasse))
             {
-                case 1:
-                   // service.sabonner();
-                    break;
-                case 2:
-                   // service.seDesabonner();
-                    break;
-                case 3:
-                    System.out.print("choix 3");
-                    break;
-                case 4:
-                    System.out.print("choix 4");
-                case 0:
-                    System.out.print("Au revoir");
-                    break;
-                default:
-                    System.out.print("Choix invalide");
-                    break;
+                System.out.print("Bienvenue " + e.getNom());
+                return e;
             }
-        }while(choice != 0);
+        }
+        return null;
+    }
+    //recuperer le message
+    public static Message getMessage()
+    {
+
     }
 }

@@ -8,10 +8,11 @@ public class Employe
     private String motDePasse;
 
     //constructor de la class
-    public Employe(String nom, String prenom, String email) {
+    public Employe(String nom, String prenom, String email, String motDePasse) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
+        this.motDePasse = motDePasse;
     }
 
     public String getNom() {
