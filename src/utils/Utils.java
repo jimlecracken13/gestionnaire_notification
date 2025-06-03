@@ -1,39 +1,42 @@
 package utils;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+import model.Abonne;
 import model.Employe;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
-    //static ObjectMapper mapper = new ObjectMapper();
+    static ObjectMapper mapper = new ObjectMapper();
     private static final String EMAIL_REGEX =
             "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-
+    List<Employe> listEmploye = new ArrayList<>();
     public static boolean estEmailValide(String email) {
         return email != null && email.matches(EMAIL_REGEX);
     }
-    /*
-    //je recupère la liste des employés
-    public static List<Employe> getEmployes()  {
-        try
-        {
-            // Lecture du JSON et transformation en liste d'objets Java
-            List<Employe> employes = List.of(mapper.readValue(
-                    new File("database.json"),
-                    Employe[].class // tableau -> converti en List avec List.of
-            ));
-            return employes;
-        }
-        catch (com.fasterxml.jackson.databind.JsonMappingException e) {
-        System.err.println("Erreur de mapping JSON : " + e.getMessage());
-        } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
-        System.err.println("Erreur de traitement JSON : " + e.getMessage());
+    //recuperer la liste des employés
+    public List<Employe>  getListEmploye()
+    {
+        try {
+            JsonNode root = mapper.readTree(new File("database.json"));
+            JsonNode employeNode = root.get("employés");
+            for(JsonNode node: employeNode)
+            {
+                String nom = node.get("nom").asText();
+                String prenom = node.get("prenom").asText();
+                String email = node.get("email").asText();
+                String motDePasse = node.get("motDePasse").asText();
+                Employe e = new Employe(nom, prenom, email, motDePasse);
+                listEmploye.add(e);
+            }
+            return listEmploye;
         } catch (IOException e) {
-        System.err.println("Erreur de lecture du fichier : " + e.getMessage());
+            throw new RuntimeException(e);
         }
+    }
 
-    }*/
+
 }

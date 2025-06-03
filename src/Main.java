@@ -77,7 +77,7 @@ public class Main
                         System.out.print("choix 3");
                         break;
                     case 4:
-                        System.out.print("choix 4");
+                        service.notifierAbonne();
                         break;
                     case 0:
                         System.out.print("Au revoir");
@@ -112,8 +112,5 @@ public class Main
         return null;
     }
     //recuperer le message
-    public static Message getMessage()
-    {
 
-    }
 }
