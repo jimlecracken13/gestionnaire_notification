@@ -6,8 +6,10 @@ import model.Abonne;
 public interface NotificationService {
    //methode pour s'abonner
    void sabonner(Abonne e);
+
     //methode pour se desabonner
     void seDesabonner(Abonne e);
+
     //notifier les abonnés
     void notifierAbonne();
 }

@@ -5,8 +5,9 @@ public class Employe
     private String nom;
     private String prenom;
     private String email;
+    private String motDePasse;
 
-    //constructeur de la classe
+    //constructor de la class
     public Employe(String nom, String prenom, String email) {
         this.nom = nom;
         this.prenom = prenom;
@@ -36,4 +37,7 @@ public class Employe
     public String getEmail() {
         return email;
     }
+
+    public String getMotDePasse(){return motDePasse;}
+    public void setMotDePasse(String motDePasse){this.motDePasse= motDePasse;}
 }

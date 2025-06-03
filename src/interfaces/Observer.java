@@ -1,6 +1,8 @@
 package interfaces;
 
+import model.Message;
+
 public interface Observer {
-    void envoyerMessage();
+    void envoyerMessage(Message message);
     void notifier(String nomDestinateur);
 }

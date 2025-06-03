@@ -8,9 +8,9 @@ public class Abonne extends Employe implements Observer
     public Abonne(String nom, String prenom, String email) {
         super(nom, prenom, email);
     }
-    public void envoyerMessage()
+    public void envoyerMessage(Message message)
     {
-        //
+        System.out.println(message.message);
     }
     public void notifier(String nomDestinataire)
     {

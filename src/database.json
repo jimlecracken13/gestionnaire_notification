@@ -1,0 +1,27 @@
+{
+  "employés": [
+    {
+      "nom": "Diallo",
+      "prenom": "Amadou",
+      "email": "jimlecracken13@gmail.com"
+    },
+    {
+
+    }
+  ],
+  "abonnés" : [
+    {
+      "employé": {
+        "nom": "Diallo",
+        "prenom": "Amadou",
+        "email": "jimlecracken13@gmail.com"
+      },
+      "notifications": []
+    },
+    {
+      "employé": {
+
+      }
+    }
+  ]
+}
