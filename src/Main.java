@@ -1,13 +1,20 @@
 
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import model.Employe;
-import model.Message;
 import service.NotificationService;
+import utils.Utils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 import static utils.Utils.estEmailValide;
+
+// dir /s /b src\*.java > sources.txt
+ // javac -cp "lib/*" -d out @sources.txt
+ // java -cp "out;lib/*" Main
 
 
 public class Main
@@ -25,13 +32,6 @@ public class Main
 
         int choice;
         boolean correct = false;
-        List<Employe> employeList = new ArrayList<>();
-        Employe employe = new Employe("diallo","amadou","jimlecracken13@gmail.com"
-                ,"blablacar");
-        Employe employe1 = new Employe("touré", "ousmane", "ousbi@gmail.com",
-                "DestinationFinale");
-        employeList.add(employe);
-        employeList.add(employe1);
         //verifier les informations saisies
         do {
             //saisi des informations de l'employé
@@ -52,10 +52,11 @@ public class Main
         }while(!correct && essai>=1);
 
         //checker si l'employe existe
-        if(getEmploye(employeList,email,motDePasse)!=null)
+        if(getEmploye(email,motDePasse)!=null)
         {
-            Employe e = getEmploye(employeList,email,motDePasse);
-            System.out.print("Bienvenue dans notre service de notification");
+            Employe e = getEmploye(email,motDePasse);
+            System.out.println("Bonjour "+e.getPrenom()+" "+e.getNom());
+            System.out.println("Bienvenue dans notre service de notification");
             do {
 
                 System.out.println("Entrez un chiffre");
@@ -71,7 +72,7 @@ public class Main
                         service.sabonner(e);
                         break;
                     case 2:
-                        // service.seDesabonner();
+                        service.seDesabonner(Utils.employeToAbonne(e));
                         break;
                     case 3:
                         System.out.print("choix 3");
@@ -90,26 +91,36 @@ public class Main
         }
         else
         {
-            System.out.println("Nous n'avons pas pu retrouver l'utilisateur" +
-                    "Veillez verifier l'email et le password");
+            System.out.println("Nous n'avons pas pu retrouver l'utilisateur");
+            System.out.println("Veillez verifier l'email et le password");
         }
-
-
-
     }
 
     //recuperer l'employer connecter
-    public static Employe getEmploye(List<Employe> employeList, String email, String motDePasse)
+    public static Employe getEmploye(String email, String motDePasse)
     {
-        for(Employe e : employeList)
-        {
-            if(e.getEmail().equals(email) && e.getMotDePasse().equals(motDePasse))
+        //fichier
+        File file = new File("database.json");
+        ObjectMapper mapper = new ObjectMapper();
+        Employe em = null;
+        try {
+            JsonNode root = mapper.readTree(file);
+            ArrayNode abonneNode = (ArrayNode) root.get("employés");
+            for(JsonNode node: abonneNode)
             {
-                System.out.print("Bienvenue " + e.getNom());
-                return e;
+                if(node.get("email").asText().equals(email) &&
+                        node.get("motDePasse").asText().equals(motDePasse))
+                {
+                    String nom = node.get("nom").asText();
+                    String prenom = node.get("prenom").asText();
+                     em = new Employe(nom, prenom, email, motDePasse);
+                     break;
+                }
             }
+            return em;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return null;
     }
     //recuperer le message
 

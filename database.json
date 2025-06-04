@@ -1,0 +1,63 @@
+{
+  "employés" : [ {
+    "nom" : "Diallo",
+    "prenom" : "Amadou",
+    "email" : "jimlecracken13@gmail.com",
+    "motDePasse" : "password"
+  }, {
+    "nom" : "Traoré",
+    "prenom" : "Fatou",
+    "email" : "fatou.traore@example.com",
+    "motDePasse" : "monmotdepasse123"
+  }, {
+    "nom" : "Keita",
+    "prenom" : "Moussa",
+    "email" : "mkeita@example.com",
+    "motDePasse" : "securepass"
+  }, {
+    "nom" : "Camara",
+    "prenom" : "Aminata",
+    "email" : "aminata.camara@example.com",
+    "motDePasse" : "pass1234"
+  }, {
+    "nom" : "Kouyaté",
+    "prenom" : "Ibrahim",
+    "email" : "ibrahim.kouyate@example.com",
+    "motDePasse" : "ibkpassword"
+  }, {
+    "nom" : "Cissé",
+    "prenom" : "Salimata",
+    "email" : "sali.cisse@example.com",
+    "motDePasse" : "sali2025"
+  }, {
+    "nom" : "Diabaté",
+    "prenom" : "Ousmane",
+    "email" : "ousmane.d@example.com",
+    "motDePasse" : "diabateOus"
+  }, {
+    "nom" : "Barry",
+    "prenom" : "Mariama",
+    "email" : "mariama.barry@example.com",
+    "motDePasse" : "barryM!"
+  }, {
+    "nom" : "Bah",
+    "prenom" : "Abdoul",
+    "email" : "abdoul.bah@example.com",
+    "motDePasse" : "bahSecure"
+  }, {
+    "nom" : "Sylla",
+    "prenom" : "Khadija",
+    "email" : "khadija.sylla@example.com",
+    "motDePasse" : "sylla2024"
+  } ],
+  "abonnés" : [ {
+    "employé" : {
+      "nom" : "Diallo",
+      "prenom" : "Amadou",
+      "email" : "jimlecracken13@gmail.com",
+      "motDePasse" : "password",
+      "debutAbonnement" : "Wed Jun 04 15:30:08 UTC 2025",
+      "notifications" : [ ]
+    }
+  } ]
+}

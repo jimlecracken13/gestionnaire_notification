@@ -7,6 +7,7 @@ import model.Employe;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Utils {
@@ -38,5 +39,12 @@ public class Utils {
         }
     }
 
-
+    public static Abonne employeToAbonne(Employe e)
+    {
+        Abonne abonne = new Abonne(e.getNom(),e.getPrenom(),e.getEmail(),
+                e.getMotDePasse());
+        abonne.setDebutAbonnement(new Date());
+        abonne.setNotifications(new ArrayList<>());
+        return abonne;
+    }
 }

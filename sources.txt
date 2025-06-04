@@ -1,0 +1,8 @@
+C:\Users\kalandew8\Desktop\projets\gestion_notification\src\Main.java
+C:\Users\kalandew8\Desktop\projets\gestion_notification\src\interfaces\NotificationService.java
+C:\Users\kalandew8\Desktop\projets\gestion_notification\src\interfaces\Observer.java
+C:\Users\kalandew8\Desktop\projets\gestion_notification\src\model\Abonne.java
+C:\Users\kalandew8\Desktop\projets\gestion_notification\src\model\Employe.java
+C:\Users\kalandew8\Desktop\projets\gestion_notification\src\model\Message.java
+C:\Users\kalandew8\Desktop\projets\gestion_notification\src\service\NotificationService.java
+C:\Users\kalandew8\Desktop\projets\gestion_notification\src\utils\Utils.java

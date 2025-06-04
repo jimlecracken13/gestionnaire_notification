@@ -1,7 +1,8 @@
 package service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.JsonNode;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -26,22 +27,46 @@ public class NotificationService implements interfaces.NotificationService
             File file = new File("database.json");
             JsonNode root = mapper.readTree(file);
             ArrayNode abonneNode =(ArrayNode) root.get("abonnés");
-            //creer un nouvel objet employés
-            ObjectNode nouvelEmploye = mapper.createObjectNode();
-            //ajout des champs
-            nouvelEmploye.put("nom",newAbonne.getNom());
-            nouvelEmploye.put("prenom",newAbonne.getPrenom());
-            nouvelEmploye.put("email", newAbonne.getEmail());
-            nouvelEmploye.put("motDePasse", newAbonne.getMotDePasse());
-            //je recupère la date currente
-            Date today = new Date();
-            nouvelEmploye.put("debutAbonnement", today.toString());
-            //
-            ObjectNode nouveauAbonne = mapper.createObjectNode();
-            nouveauAbonne.set("employé",nouvelEmploye);
-            abonneNode.add(nouveauAbonne);
-            mapper.writerWithDefaultPrettyPrinter().writeValue(file, root);
-            System.out.println("Nouvel Abonné Ajouté");
+            boolean found = false;
+            //check if already "abonné"
+            for(int i =0; i< abonneNode.size(); i++)
+            {
+                JsonNode employe = abonneNode.get(i).get("employé");
+                if(!employe.isNull())
+                {
+                    if(employe.get("email").asText().equals(newAbonne.getEmail()))
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if(!found)
+            {
+                //creer un nouvel objet employés
+                ObjectNode nouvelEmploye = mapper.createObjectNode();
+                //ajout des champs
+                nouvelEmploye.put("nom",newAbonne.getNom());
+                nouvelEmploye.put("prenom",newAbonne.getPrenom());
+                nouvelEmploye.put("email", newAbonne.getEmail());
+                nouvelEmploye.put("motDePasse", newAbonne.getMotDePasse());
+                //je recupère la date courrente
+                Date today = new Date();
+                nouvelEmploye.put("debutAbonnement", today.toString());
+                // on crée la liste des notification
+                ArrayNode notiArray = mapper.createArrayNode();
+                nouvelEmploye.set("notifications", notiArray);
+
+                ObjectNode nouveauAbonne = mapper.createObjectNode();
+                nouveauAbonne.set("employé",nouvelEmploye);
+                abonneNode.add(nouveauAbonne);
+                mapper.writerWithDefaultPrettyPrinter().writeValue(file, root);
+                System.out.println("Nouvel Abonné Ajouté");
+            }
+            else
+            {
+                System.out.println("Vous êtes déjà abonné");
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -57,12 +82,15 @@ public class NotificationService implements interfaces.NotificationService
             ArrayNode abonneNode = (ArrayNode) root.get("abonnés");
             for(int i =0; i< abonneNode.size(); i++)
             {
-
-                JsonNode employe = abonneNode.get(i).get("employe");
-                if(employe.get("email").asText().equals(abonne.getEmail()))
+                JsonNode employe = abonneNode.get(i).get("employé");
+                if(!employe.isNull())
                 {
-                    abonneNode.remove(i);
-                    break;
+                    if(employe.get("email").asText().equals(abonne.getEmail()))
+                    {
+                        abonneNode.remove(i);
+                        System.out.println("Vous avez été desabonné");
+                        break;
+                    }
                 }
             }
             mapper.writerWithDefaultPrettyPrinter().writeValue(file, root);
@@ -97,7 +125,8 @@ public class NotificationService implements interfaces.NotificationService
             //notification console des abonnés
             for(Abonne abon: listAbonne)
             {
-                if(abon.getEmail().equals(e.getEmail()))
+                //on exclus l'expéditaire
+                if(!abon.getEmail().equals(e.getEmail()))
                 {
                     abon.notifier(abon.getNom(),e.getNom());
                     abon.getNotifications().add("vous avez reçu un message de "+ e.getNom());
@@ -107,4 +136,5 @@ public class NotificationService implements interfaces.NotificationService
             throw new RuntimeException(exception);
         }
     }
+
 }
