@@ -105,10 +105,12 @@ public class NotificationService implements interfaces.NotificationService
         File file = new File("database.json");
         try {
             JsonNode root = mapper.readTree(file);
-            JsonNode abonneNode = root.get("abonnés");
-            for(JsonNode node: abonneNode)
+            ArrayNode abonneNode = (ArrayNode) root.get("abonnés");
+            for(JsonNode node : abonneNode)
             {
-                String nom = node.get("nom").asText();
+                System.out.println(node.has("nom"));
+                System.out.println(node.isNull());
+                String nom = node.get("nom");
                 String prenom = node.get("prenom").asText();
                 String email = node.get("email").asText();
                 String motDePasse = node.get("motDePasse").asText();
@@ -129,9 +131,23 @@ public class NotificationService implements interfaces.NotificationService
                 if(!abon.getEmail().equals(e.getEmail()))
                 {
                     abon.notifier(abon.getNom(),e.getNom());
-                    abon.getNotifications().add("vous avez reçu un message de "+ e.getNom());
+                    abon.getNotifications().add("Vous avez reçu un message de "+ e.getNom());
                 }
             }
+            //ajout des notifications au fichier
+            for(int i = 0; i<listAbonne.size(); i++)
+            {
+                JsonNode employe = abonneNode.get(i).get("employé");
+                ArrayNode nodeNotification = (ArrayNode) employe.get("notifications");
+                for(int j =0; j<listAbonne.get(i).getNotifications().size();j++)
+                {
+                    if(!employe.get("email").asText().equals(e.getEmail()))
+                    {
+                        nodeNotification.add(listAbonne.get(i).getNotifications().get(j));
+                    }
+                }
+            }
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, root);
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }

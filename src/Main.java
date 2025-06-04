@@ -78,7 +78,7 @@ public class Main
                         System.out.print("choix 3");
                         break;
                     case 4:
-                        //service.notifierAbonne();
+                        service.notifierAbonne(Utils.employeToAbonne(e));
                         break;
                     case 0:
                         System.out.print("Au revoir");
