@@ -4,12 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import model.Abonne;
 import model.Employe;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class NotificationService implements interfaces.NotificationService
@@ -20,19 +22,37 @@ public class NotificationService implements interfaces.NotificationService
     @Override
     public void sabonner(Employe newAbonne)
     {
-        Abonne abonne =
-                new Abonne(newAbonne.getNom(),newAbonne.getPrenom(),newAbonne.getEmail(), newAbonne.getMotDePasse());
-        listAbonne.add(abonne);
-        System.out.println(listAbonne);
+        try {
+            File file = new File("database.json");
+            JsonNode root = mapper.readTree(file);
+            ArrayNode abonneNode =(ArrayNode) root.get("abonnés");
+            //creer un nouvel objet employés
+            ObjectNode nouvelEmploye = mapper.createObjectNode();
+            //ajout des champs
+            nouvelEmploye.put("nom",newAbonne.getNom());
+            nouvelEmploye.put("prenom",newAbonne.getPrenom());
+            nouvelEmploye.put("email", newAbonne.getEmail());
+            nouvelEmploye.put("motDePasse", newAbonne.getMotDePasse());
+            //je recupère la date currente
+            Date today = new Date();
+            nouvelEmploye.put("debutAbonnement", today.toString());
+            //
+            ObjectNode nouveauAbonne = mapper.createObjectNode();
+            nouveauAbonne.set("employé",nouvelEmploye);
+            abonneNode.add(nouveauAbonne);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, root);
+            System.out.println("Nouvel Abonné Ajouté");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     //retirer un abonné de la liste des abonnées
     public void seDesabonner(Abonne abonne)
     {
-
         //Recupère la liste des abonnés
         try {
-            File file = new File("database");
+            File file = new File("database.json");
             JsonNode root = mapper.readTree(file);
             ArrayNode abonneNode = (ArrayNode) root.get("abonnés");
             for(int i =0; i< abonneNode.size(); i++)
@@ -53,11 +73,38 @@ public class NotificationService implements interfaces.NotificationService
 
     //notifier tous les abonnés de la liste
     @Override
-    public void notifierAbonne() {
-        System.out.println("la taille de la liste d'abonner "+listAbonne.size());
-        for (Abonne abonne: listAbonne)
-        {
-            abonne.notifier(abonne.getPrenom().concat(abonne.getNom()));
+    public void notifierAbonne(Abonne e) {
+        File file = new File("database.json");
+        try {
+            JsonNode root = mapper.readTree(file);
+            JsonNode abonneNode = root.get("abonnés");
+            for(JsonNode node: abonneNode)
+            {
+                String nom = node.get("nom").asText();
+                String prenom = node.get("prenom").asText();
+                String email = node.get("email").asText();
+                String motDePasse = node.get("motDePasse").asText();
+                //Date date =  Date node.get("dateAbonnement").asText();
+                ArrayNode notif = (ArrayNode) node.get("notifications");
+                List<String> notifications = new ArrayList<>();
+                for (JsonNode n : notif) {
+                    notifications.add(n.asText());
+                }
+                Abonne abonne = new Abonne(nom,prenom,email,motDePasse);
+                abonne.setNotifications(notifications);
+                listAbonne.add(abonne);
+            }
+            //notification console des abonnés
+            for(Abonne abon: listAbonne)
+            {
+                if(abon.getEmail().equals(e.getEmail()))
+                {
+                    abon.notifier(abon.getNom(),e.getNom());
+                    abon.getNotifications().add("vous avez reçu un message de "+ e.getNom());
+                }
+            }
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
         }
     }
 }

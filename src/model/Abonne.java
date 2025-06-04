@@ -35,8 +35,8 @@ public class Abonne extends Employe implements Observer
     {
         System.out.println(message.message);
     }
-    public void notifier(String nomDestinataire)
+    public void notifier(String nomDestinataire, String nomExpeditaire)
     {
-        System.out.println(nomDestinataire + ", vous avez reçu une notification de nom_expeditaire");
+        System.out.println(nomDestinataire + ", vous avez reçu un message de "+ nomExpeditaire);
     }
 }

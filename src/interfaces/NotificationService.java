@@ -12,5 +12,5 @@ public interface NotificationService {
     void seDesabonner(Abonne e);
 
     //notifier les abonnés
-    void notifierAbonne();
+    void notifierAbonne(Abonne e);
 }
