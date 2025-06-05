@@ -103,51 +103,59 @@ public class NotificationService implements interfaces.NotificationService
     @Override
     public void notifierAbonne(Abonne e) {
         File file = new File("database.json");
+        //verifier que l'utilisateur est abonné
         try {
             JsonNode root = mapper.readTree(file);
             ArrayNode abonneNode = (ArrayNode) root.get("abonnés");
-            for(JsonNode node : abonneNode)
+
+            if(!abonneNode.isEmpty())
             {
-                System.out.println(node.has("nom"));
-                System.out.println(node.isNull());
-                String nom = node.get("nom");
-                String prenom = node.get("prenom").asText();
-                String email = node.get("email").asText();
-                String motDePasse = node.get("motDePasse").asText();
-                //Date date =  Date node.get("dateAbonnement").asText();
-                ArrayNode notif = (ArrayNode) node.get("notifications");
-                List<String> notifications = new ArrayList<>();
-                for (JsonNode n : notif) {
-                    notifications.add(n.asText());
-                }
-                Abonne abonne = new Abonne(nom,prenom,email,motDePasse);
-                abonne.setNotifications(notifications);
-                listAbonne.add(abonne);
-            }
-            //notification console des abonnés
-            for(Abonne abon: listAbonne)
-            {
-                //on exclus l'expéditaire
-                if(!abon.getEmail().equals(e.getEmail()))
+                for(JsonNode node : abonneNode)
                 {
-                    abon.notifier(abon.getNom(),e.getNom());
-                    abon.getNotifications().add("Vous avez reçu un message de "+ e.getNom());
+                    JsonNode employe = node.get("employé");
+                    String nom = employe.get("nom").asText();
+                    String prenom = employe.get("prenom").asText();
+                    String email = employe.get("email").asText();
+                    String motDePasse = employe.get("motDePasse").asText();
+                    //Date date =  Date node.get("dateAbonnement").asText();
+                    ArrayNode notif = (ArrayNode) employe.get("notifications");
+                    List<String> notifications = new ArrayList<>();
+                    for (JsonNode n : notif) {
+                        notifications.add(n.asText());
+                    }
+                    Abonne abonne = new Abonne(nom,prenom,email,motDePasse);
+                    abonne.setNotifications(notifications);
+                    listAbonne.add(abonne);
                 }
-            }
-            //ajout des notifications au fichier
-            for(int i = 0; i<listAbonne.size(); i++)
-            {
-                JsonNode employe = abonneNode.get(i).get("employé");
-                ArrayNode nodeNotification = (ArrayNode) employe.get("notifications");
-                for(int j =0; j<listAbonne.get(i).getNotifications().size();j++)
+                //notification console des abonnés
+                for(Abonne abon: listAbonne)
                 {
-                    if(!employe.get("email").asText().equals(e.getEmail()))
+                    //on exclus l'expéditaire
+                    if(!abon.getEmail().equals(e.getEmail()))
                     {
-                        nodeNotification.add(listAbonne.get(i).getNotifications().get(j));
+                        abon.notifier(abon.getNom(),e.getNom());
+                        abon.getNotifications().add("Vous avez reçu un message de "+ e.getNom());
                     }
                 }
+                //ajout des notifications au fichier
+                for(int i = 0; i<listAbonne.size(); i++)
+                {
+                    JsonNode employe = abonneNode.get(i).get("employé");
+                    ArrayNode nodeNotification = (ArrayNode) employe.get("notifications");
+                    for(int j =0; j<listAbonne.get(i).getNotifications().size();j++)
+                    {
+                        if(!employe.get("email").asText().equals(e.getEmail()))
+                        {
+                            nodeNotification.add(listAbonne.get(i).getNotifications().get(j));
+                        }
+                    }
+                }
+                mapper.writerWithDefaultPrettyPrinter().writeValue(file, root);
             }
-            mapper.writerWithDefaultPrettyPrinter().writeValue(file, root);
+            else{
+                System.out.println("size abonné"+ abonneNode.size());
+                System.out.println("Vous n'êtes pas abonnés");
+            }
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
