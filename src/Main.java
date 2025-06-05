@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import model.Abonne;
 import model.Employe;
+import repositorie.EmployeRepository;
 import service.NotificationService;
 import utils.Utils;
 
@@ -25,6 +26,8 @@ public class Main
 
         //NotificationService instance
         NotificationService service = new NotificationService();
+        //repositorie employés
+        EmployeRepository employeRepository = new EmployeRepository();
         String email;
         String motDePasse;
         Scanner entre = new Scanner(System.in);
@@ -59,9 +62,9 @@ public class Main
                         System.out.println("la valeur du mot de passe"+ motDePasse);
                         correct = true;
                         //checker si l'employe existe
-                        if(getEmploye(email,motDePasse)!=null)
+                        if(employeRepository.getEmploye(email,motDePasse)!=null)
                         {
-                            Employe e = getEmploye(email,motDePasse);
+                            Employe e = employeRepository.getEmploye(email,motDePasse);
                             int choice;
                             //verifier que si l'employé est admin
                             if(e.estAdmin())
@@ -125,32 +128,7 @@ public class Main
 
     }
 
-    //recuperer l'employer connecter
-    public static Employe getEmploye(String email, String motDePasse)
-    {
-        //fichier
-        File file = new File("database.json");
-        ObjectMapper mapper = new ObjectMapper();
-        Employe em = null;
-        try {
-            JsonNode root = mapper.readTree(file);
-            ArrayNode abonneNode = (ArrayNode) root.get("employés");
-            for(JsonNode node: abonneNode)
-            {
-                if(node.get("email").asText().equals(email) &&
-                        node.get("motDePasse").asText().equals(motDePasse))
-                {
-                    String nom = node.get("nom").asText();
-                    String prenom = node.get("prenom").asText();
-                     em = new Employe(nom, prenom, email, motDePasse);
-                     break;
-                }
-            }
-            return em;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     //recuperer le message
 
 }

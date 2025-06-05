@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Factory {
-    public Abonne abonneFactory(JsonNode node)
+    static public Abonne abonneFactory(JsonNode node)
     {
         String email = node.get("email").asText();
         String nom = node.get("nom").asText();

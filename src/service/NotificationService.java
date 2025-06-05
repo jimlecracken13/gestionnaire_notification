@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import model.Abonne;
 import repositorie.AbonneRepository;
 import model.Employe;
+import utils.Factory;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,63 +33,37 @@ public class NotificationService implements interfaces.NotificationService
     //notifier tous les abonnés de la liste
     @Override
     public void notifierAbonne(Abonne e) {
-        File file = new File("database.json");
-        //verifier que l'utilisateur est abonné
-        try {
-            JsonNode root = mapper.readTree(file);
-            ArrayNode abonneNode = (ArrayNode) root.get("abonnés");
-
-            if(!abonneNode.isEmpty())
+        ArrayNode abonneArray = repository.getAllAbonnes();
+        List<Abonne> abonnes = new ArrayList<>();
+        for(JsonNode node: abonneArray)
+        {
+            JsonNode employeNode = node.get("employé");
+            //exclure l'expeditaire
+            if(!employeNode.get("email").asText().equals(e.getEmail()))
             {
-                for(JsonNode node : abonneNode)
-                {
-                    JsonNode employe = node.get("employé");
-                    String nom = employe.get("nom").asText();
-                    String prenom = employe.get("prenom").asText();
-                    String email = employe.get("email").asText();
-                    String motDePasse = employe.get("motDePasse").asText();
-                    //Date date =  Date node.get("dateAbonnement").asText();
-                    ArrayNode notif = (ArrayNode) employe.get("notifications");
-                    List<String> notifications = new ArrayList<>();
-                    for (JsonNode n : notif) {
-                        notifications.add(n.asText());
-                    }
-                    Abonne abonne = new Abonne(nom,prenom,email,motDePasse);
-                    abonne.setNotifications(notifications);
-                    listAbonne.add(abonne);
-                }
-                //notification console des abonnés
-                for(Abonne abon: listAbonne)
-                {
-                    //on exclus l'expéditaire
-                    if(!abon.getEmail().equals(e.getEmail()))
-                    {
-                        abon.notifier(abon.getNom(),e.getNom());
-                        abon.getNotifications().add("Vous avez reçu un message de "+ e.getNom());
-                    }
-                }
-                //ajout des notifications au fichier
-                for(int i = 0; i<listAbonne.size(); i++)
-                {
-                    JsonNode employe = abonneNode.get(i).get("employé");
-                    ArrayNode nodeNotification = (ArrayNode) employe.get("notifications");
-                    for(int j =0; j<listAbonne.get(i).getNotifications().size();j++)
-                    {
-                        if(!employe.get("email").asText().equals(e.getEmail()))
-                        {
-                            nodeNotification.add(listAbonne.get(i).getNotifications().get(j));
-                        }
-                    }
-                }
-                mapper.writerWithDefaultPrettyPrinter().writeValue(file, root);
+                abonnes.add(Factory.abonneFactory(employeNode));
             }
-            else{
-                System.out.println("size abonné"+ abonneNode.size());
-                System.out.println("Vous n'êtes pas abonnés");
-            }
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
         }
-    }
 
+        // Ajouter une nouvelle notification
+        for (Abonne abonne : abonnes) {
+            abonne.notifier(abonne.getNom(), e.getNom());
+            abonne.getNotifications().add("Vous avez reçu un message de " + e.getNom());
+        }
+
+        //mise à jour des notifications
+        for(int i = 0; i<abonneArray.size(); i++)
+        {
+            JsonNode employeNode = abonneArray.get(i).get("employé");
+            if(!employeNode.get("email").asText().equals(e.getEmail()))
+            {
+                ArrayNode notifNode = (ArrayNode) employeNode.get("notifications");
+                for(int j = 0; j<listAbonne.get(i).getNotifications().size(); j++)
+                {
+                    notifNode.add("Vous avez reçu un message de " + listAbonne.get(i).getNotifications().get(j));
+                }
+            }
+        }
+        repository.saveAllAbonnes(abonneArray);
+    }
 }
