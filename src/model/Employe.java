@@ -6,6 +6,15 @@ public class Employe
     private String prenom;
     private String email;
     private String motDePasse;
+    private boolean estAdmin = false;
+
+    public boolean estAdmin() {
+        return estAdmin;
+    }
+
+    public void setEstAdmin(boolean estAdmin) {
+        this.estAdmin = estAdmin;
+    }
 
     //constructor de la class
     public Employe(String nom, String prenom, String email, String motDePasse) {

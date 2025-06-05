@@ -3,100 +3,30 @@ package service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 //import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import model.Abonne;
+import repositorie.AbonneRepository;
 import model.Employe;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class NotificationService implements interfaces.NotificationService
 {
     List<Abonne> listAbonne = new ArrayList<>();
-    ObjectMapper mapper = new ObjectMapper();
-    //ajouter à la liste des abonnées
+    AbonneRepository repository = new AbonneRepository();
     @Override
     public void sabonner(Employe newAbonne)
     {
-        try {
-            File file = new File("database.json");
-            JsonNode root = mapper.readTree(file);
-            ArrayNode abonneNode =(ArrayNode) root.get("abonnés");
-            boolean found = false;
-            //check if already "abonné"
-            for(int i =0; i< abonneNode.size(); i++)
-            {
-                JsonNode employe = abonneNode.get(i).get("employé");
-                if(!employe.isNull())
-                {
-                    if(employe.get("email").asText().equals(newAbonne.getEmail()))
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-            }
-            if(!found)
-            {
-                //creer un nouvel objet employés
-                ObjectNode nouvelEmploye = mapper.createObjectNode();
-                //ajout des champs
-                nouvelEmploye.put("nom",newAbonne.getNom());
-                nouvelEmploye.put("prenom",newAbonne.getPrenom());
-                nouvelEmploye.put("email", newAbonne.getEmail());
-                nouvelEmploye.put("motDePasse", newAbonne.getMotDePasse());
-                //je recupère la date courrente
-                Date today = new Date();
-                nouvelEmploye.put("debutAbonnement", today.toString());
-                // on crée la liste des notification
-                ArrayNode notiArray = mapper.createArrayNode();
-                nouvelEmploye.set("notifications", notiArray);
-
-                ObjectNode nouveauAbonne = mapper.createObjectNode();
-                nouveauAbonne.set("employé",nouvelEmploye);
-                abonneNode.add(nouveauAbonne);
-                mapper.writerWithDefaultPrettyPrinter().writeValue(file, root);
-                System.out.println("Nouvel Abonné Ajouté");
-            }
-            else
-            {
-                System.out.println("Vous êtes déjà abonné");
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        repository.ajouter(newAbonne);
     }
 
     //retirer un abonné de la liste des abonnées
     public void seDesabonner(Abonne abonne)
     {
-        //Recupère la liste des abonnés
-        try {
-            File file = new File("database.json");
-            JsonNode root = mapper.readTree(file);
-            ArrayNode abonneNode = (ArrayNode) root.get("abonnés");
-            for(int i =0; i< abonneNode.size(); i++)
-            {
-                JsonNode employe = abonneNode.get(i).get("employé");
-                if(!employe.isNull())
-                {
-                    if(employe.get("email").asText().equals(abonne.getEmail()))
-                    {
-                        abonneNode.remove(i);
-                        System.out.println("Vous avez été desabonné");
-                        break;
-                    }
-                }
-            }
-            mapper.writerWithDefaultPrettyPrinter().writeValue(file, root);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        repository.delete(abonne);
     }
 
     //notifier tous les abonnés de la liste

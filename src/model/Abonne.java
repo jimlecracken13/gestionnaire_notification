@@ -55,7 +55,7 @@ public class Abonne extends Employe implements Observer
             for(JsonNode node: abonneNode)
             {
                 JsonNode employe = node.get("employé");
-                if(!employe.get("email").equals(e.getEmail()))
+                if(!employe.get("email").asText().equals(e.getEmail()))
                 {
                     MailService service = new MailService();
                     service.envoyerEmail(

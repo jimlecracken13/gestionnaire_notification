@@ -3,62 +3,74 @@
     "nom" : "Diallo",
     "prenom" : "Amadou",
     "email" : "jimlecracken13@gmail.com",
-    "motDePasse" : "password"
+    "motDePasse" : "password",
+    "estAdmin": true
   }, {
     "nom" : "Traoré",
     "prenom" : "Fatou",
     "email" : "fatou.traore@example.com",
-    "motDePasse" : "monmotdepasse123"
+    "motDePasse" : "monmotdepasse123",
+    "estAdmin": false
   }, {
     "nom" : "Keita",
     "prenom" : "Moussa",
     "email" : "mkeita@example.com",
-    "motDePasse" : "securepass"
+    "motDePasse" : "securepass",
+    "estAdmin": false
   }, {
     "nom" : "Camara",
     "prenom" : "Aminata",
     "email" : "aminata.camara@example.com",
-    "motDePasse" : "pass1234"
+    "motDePasse" : "pass1234",
+    "estAdmin": false
   }, {
     "nom" : "Kouyaté",
     "prenom" : "Ibrahim",
     "email" : "ibrahim.kouyate@example.com",
-    "motDePasse" : "ibkpassword"
+    "motDePasse" : "ibkpassword",
+    "estAdmin": false
   }, {
     "nom" : "Cissé",
     "prenom" : "Salimata",
     "email" : "sali.cisse@example.com",
-    "motDePasse" : "sali2025"
+    "motDePasse" : "sali2025",
+    "estAdmin": false
   }, {
     "nom" : "Diabaté",
     "prenom" : "Ousmane",
     "email" : "ousmane.d@example.com",
-    "motDePasse" : "diabateOus"
+    "motDePasse" : "diabateOus",
+    "estAdmin": false
   }, {
     "nom" : "Barry",
     "prenom" : "Mariama",
     "email" : "mariama.barry@example.com",
-    "motDePasse" : "barryM!"
+    "motDePasse" : "barryM!",
+    "estAdmin": false
   }, {
     "nom" : "Bah",
     "prenom" : "Abdoul",
     "email" : "abdoul.bah@example.com",
-    "motDePasse" : "bahSecure"
+    "motDePasse" : "bahSecure",
+    "estAdmin": false
   }, {
     "nom" : "Sylla",
     "prenom" : "Khadija",
     "email" : "khadija.sylla@example.com",
-    "motDePasse" : "sylla2024"
+    "motDePasse" : "sylla2024",
+    "estAdmin": false
   }, {
     "nom" : "Diallo",
     "prenom" : "Amadou",
     "email" : "adiallo7485@gmail.com",
-    "motDePasse" : "ceciest_moi"
+    "motDePasse" : "ceciest_moi",
+    "estAdmin": false
   }, {
     "nom" : "Namakiri",
     "prenom" : "Mori",
     "email" : "na.ankata@gmail.com",
-    "motDePasse" : "motDePasse"
+    "motDePasse" : "motDePasse",
+    "estAdmin": false
   } ],
   "abonnés" : [ {
     "employé" : {
@@ -66,8 +78,9 @@
       "prenom" : "Amadou",
       "email" : "adiallo7485@gmail.com",
       "motDePasse" : "ceciest_moi",
+      "estAdmin": false,
       "debutAbonnement" : "Wed Jun 04 15:48:37 UTC 2025",
-      "notifications" : [ "Vous avez reçu un message de Diallo" ]
+      "notifications" : [ ]
     }
   }, {
     "employé" : {
@@ -75,8 +88,9 @@
       "prenom" : "Mori",
       "email" : "na.ankata@gmail.com",
       "motDePasse" : "motDePasse",
+      "estAdmin": false,
       "debutAbonnement" : "Wed Jun 04 15:51:37 UTC 2025",
-      "notifications" : [ "Vous avez reçu un message de Diallo" ]
+      "notifications" : []
     }
   }, {
     "employé" : {
@@ -84,6 +98,7 @@
       "prenom" : "Amadou",
       "email" : "jimlecracken13@gmail.com",
       "motDePasse" : "password",
+      "estAdmin": true,
       "debutAbonnement" : "Thu Jun 05 09:30:25 GMT 2025",
       "notifications" : [ ]
     }
