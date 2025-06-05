@@ -49,24 +49,34 @@
     "prenom" : "Khadija",
     "email" : "khadija.sylla@example.com",
     "motDePasse" : "sylla2024"
+  }, {
+    "nom" : "Diallo",
+    "prenom" : "Amadou",
+    "email" : "adiallo7485@gmail.com",
+    "motDePasse" : "ceciest_moi"
+  }, {
+    "nom" : "Namakiri",
+    "prenom" : "Mori",
+    "email" : "na.ankata@gmail.com",
+    "motDePasse" : "motDePasse"
   } ],
   "abonnés" : [ {
     "employé" : {
-      "nom" : "Kouyaté",
-      "prenom" : "Ibrahim",
-      "email" : "ibrahim.kouyate@example.com",
-      "motDePasse" : "ibkpassword",
+      "nom" : "Diallo",
+      "prenom" : "Amadou",
+      "email" : "adiallo7485@gmail.com",
+      "motDePasse" : "ceciest_moi",
       "debutAbonnement" : "Wed Jun 04 15:48:37 UTC 2025",
-      "notifications" : [ ]
+      "notifications" : [ "Vous avez reçu un message de Diallo" ]
     }
   }, {
     "employé" : {
-      "nom" : "Sylla",
-      "prenom" : "Khadija",
-      "email" : "khadija.sylla@example.com",
-      "motDePasse" : "sylla2024",
+      "nom" : "Namakiri",
+      "prenom" : "Mori",
+      "email" : "na.ankata@gmail.com",
+      "motDePasse" : "motDePasse",
       "debutAbonnement" : "Wed Jun 04 15:51:37 UTC 2025",
-      "notifications" : []
+      "notifications" : [ "Vous avez reçu un message de Diallo" ]
     }
   }, {
     "employé" : {

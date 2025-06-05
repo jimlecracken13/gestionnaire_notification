@@ -3,6 +3,7 @@
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import model.Abonne;
 import model.Employe;
 import service.NotificationService;
 import utils.Utils;
@@ -81,10 +82,12 @@ public class Main
                                 service.seDesabonner(Utils.employeToAbonne(e));
                                 break;
                             case 3:
-                                System.out.print("choix 3");
+
                                 break;
                             case 4:
-                                service.notifierAbonne(Utils.employeToAbonne(e));
+                                //service.notifierAbonne(Utils.employeToAbonne(e));
+                                Abonne ab = Utils.employeToAbonne(e);
+                                ab.envoyerMessage(ab);
                                 break;
                             case 0:
                                 System.out.print("Au revoir");
