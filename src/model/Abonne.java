@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import interfaces.Observer;
 import service.MailService;
-import jakarta.mail.util.StreamProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,8 +46,6 @@ public class Abonne extends Employe implements Observer
         String sujet = mScanner.nextLine();
         System.out.println("Message: ");
         String mText = mScanner.nextLine();
-        //notificationplus2025@404 : motdepasse du compte google
-        //mot de passe de l'application notifplus : sadf chso iqvw aetu
         //je recupère la liste des abonnés
         File file = new File("database.json");
         ObjectMapper mapper = new ObjectMapper();
@@ -58,13 +55,16 @@ public class Abonne extends Employe implements Observer
             for(JsonNode node: abonneNode)
             {
                 JsonNode employe = node.get("employé");
-                MailService service = new MailService();
-                service.envoyerEmail(
-                        e.getPrenom() + " " + e.getNom(),
-                        employe.get("email").asText(),
-                        sujet,
-                        mText
-                );
+                if(!employe.get("email").equals(e.getEmail()))
+                {
+                    MailService service = new MailService();
+                    service.envoyerEmail(
+                            e.getPrenom() + " " + e.getNom(),
+                            employe.get("email").asText(),
+                            sujet,
+                            mText
+                    );
+                }
             }
         } catch (IOException ex) {
             throw new RuntimeException(ex);

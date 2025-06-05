@@ -2,7 +2,7 @@ package service;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
-import jakarta.mail.util.StreamProvider;
+
 
 import java.util.Properties;
 
