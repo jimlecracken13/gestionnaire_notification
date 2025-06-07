@@ -4,6 +4,7 @@ import jakarta.mail.*;
 import jakarta.mail.internet.*;
 
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 public class MailService {
@@ -34,8 +35,13 @@ public class MailService {
 
             Transport.send(message);
             System.out.println("Email envoyé à " + destinataire);
-        } catch (Exception e) {
-            e.printStackTrace();
+        }catch(SendFailedException ex){
+            System.err.println("❌ L'e-mail n'a pas été envoyé à l'adresse invalide : " + destinataire);
+        }catch (MessagingException ex) {
+            System.err.println("❌ Une erreur s'est produite lors de l'envoi de l'e-mail à : " + destinataire);
+             // Pour le debug
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
     }
 }

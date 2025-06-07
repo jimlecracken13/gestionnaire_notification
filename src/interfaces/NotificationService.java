@@ -12,5 +12,5 @@ public interface NotificationService {
     void seDesabonner(Abonne e);
 
     //notifier les abonnés
-    void notifierAbonne(Abonne e);
+    void notifierAbonne(Abonne expediteur, String sujet, String message);
 }

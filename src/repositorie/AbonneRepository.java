@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import model.Abonne;
 import model.Employe;
+import utils.Factory;
 
 import java.io.File;
 import java.io.IOException;
@@ -96,5 +97,38 @@ public class AbonneRepository {
                }
            }
        saveAllAbonnes(abonneArray);
+    }
+
+    public Abonne getAbonne(String email)
+    {
+        ArrayNode abonneArray = getAllAbonnes();
+        for(JsonNode node : abonneArray)
+        {
+            if(node.get("employé").get("email").asText().equals(email))
+            {
+                JsonNode employe = node.get("employé");
+                return Factory.abonneFactory(employe);
+            }
+        }
+        return null;
+    }
+
+    public void getNotifications(Abonne abonne)
+    {
+        Abonne ab = getAbonne(abonne.getEmail());
+        if(ab!=null)
+        {
+            if(!ab.getNotifications().isEmpty())
+            {
+                for(String notifications : ab.getNotifications())
+                {
+                    System.out.println(notifications);
+                }
+            }
+            else
+            {
+                System.out.println("Vous n'avez aucune nofications");
+            }
+        }
     }
 }

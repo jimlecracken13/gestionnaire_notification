@@ -32,7 +32,7 @@ public class NotificationService implements interfaces.NotificationService
 
     //notifier tous les abonnés de la liste
     @Override
-    public void notifierAbonne(Abonne e) {
+    public void notifierAbonne(Abonne e, String sujet, String mText) {
         ArrayNode abonneArray = repository.getAllAbonnes();
         List<Abonne> abonnes = new ArrayList<>();
         for(JsonNode node: abonneArray)
@@ -47,23 +47,48 @@ public class NotificationService implements interfaces.NotificationService
 
         // Ajouter une nouvelle notification
         for (Abonne abonne : abonnes) {
+            //envoyer le message par email
+            //afficher la notification au console
             abonne.notifier(abonne.getNom(), e.getNom());
+            //ajouter la notification à la liste de notification des abonnés
             abonne.getNotifications().add("Vous avez reçu un message de " + e.getNom());
+            System.out.println(abonne.getNom()+" "+abonne.getNotifications().size());
+            MailService service = new MailService();
+            service.envoyerEmail(
+                    e.getPrenom() + " " + e.getNom(),
+                    abonne.getEmail(),
+                    sujet,
+                    mText
+            );
         }
 
         //mise à jour des notifications
-        for(int i = 0; i<abonneArray.size(); i++)
+        for(JsonNode node : abonneArray)
         {
-            JsonNode employeNode = abonneArray.get(i).get("employé");
-            if(!employeNode.get("email").asText().equals(e.getEmail()))
+            JsonNode employe = node.get("employé");
+            String email = employe.get("email").asText();
+            if(!email.equals(e.getEmail()))
             {
-                ArrayNode notifNode = (ArrayNode) employeNode.get("notifications");
-                for(int j = 0; j<listAbonne.get(i).getNotifications().size(); j++)
+                //on recupère l'abonné dans la liste des abonnés
+                Abonne abonne = abonnes.stream()
+                        .filter(a -> a.getEmail().equals(email))
+                        .findFirst()
+                        .orElse(null);
+                if(abonne!=null)
                 {
-                    notifNode.add("Vous avez reçu un message de " + listAbonne.get(i).getNotifications().get(j));
+                    ArrayNode notifNode = (ArrayNode) employe.get("notifications");
+                    notifNode.removeAll();
+                    for (String notif : abonne.getNotifications()) {
+                        notifNode.add(notif);
+                    }
                 }
             }
         }
         repository.saveAllAbonnes(abonneArray);
+    }
+
+    public void afficherNotifications(Abonne e)
+    {
+        repository.getNotifications(e);
     }
 }

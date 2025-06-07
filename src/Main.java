@@ -59,7 +59,6 @@ public class Main
                     }
                     else
                     {
-                        System.out.println("la valeur du mot de passe"+ motDePasse);
                         correct = true;
                         //checker si l'employe existe
                         if(employeRepository.getEmploye(email,motDePasse)!=null)
@@ -71,6 +70,19 @@ public class Main
                             {
                                 System.out.println("Bonjour cher Admin"+e.getPrenom()+
                                         " "+e.getNom());
+                                do{
+                                    System.out.println("Entrez un chiffre");
+                                    System.out.println("1: Afficher les employés");
+                                    System.out.println("2: Afficher les abonnés");
+                                    System.out.println("3: Ajouter un abonné");
+                                    System.out.println("4: Supprimer un abonné");
+                                    System.out.println("5: S'abonner");
+                                    System.out.println("6: Se désabonner");
+                                    System.out.println("7 : Afficher mes notifications");
+                                    System.out.println("8 : Envoyer un message");
+                                    System.out.println("0 : Se déconnecter");
+                                    choice = entre.nextInt();
+                                }while(choice!=0);
                             }
                             else
                             {
@@ -92,7 +104,7 @@ public class Main
                                             service.seDesabonner(Utils.employeToAbonne(e));
                                             break;
                                         case 3:
-
+                                            service.afficherNotifications(Utils.employeToAbonne(e));
                                             break;
                                         case 4:
                                             //service.notifierAbonne(Utils.employeToAbonne(e));

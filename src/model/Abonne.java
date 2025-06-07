@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import interfaces.Observer;
 import service.MailService;
+import service.NotificationService;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +39,7 @@ public class Abonne extends Employe implements Observer
     public Abonne(String nom, String prenom, String email, String motDePasse) {
         super(nom, prenom, email, motDePasse);
     }
-    public void envoyerMessage(Abonne e)
+    public void envoyerMessage(Abonne expediteur)
     {
         System.out.println("Veillez saisir le message à envoyer");
         Scanner mScanner = new Scanner(System.in);
@@ -46,32 +47,13 @@ public class Abonne extends Employe implements Observer
         String sujet = mScanner.nextLine();
         System.out.println("Message: ");
         String mText = mScanner.nextLine();
-        //je recupère la liste des abonnés
-        File file = new File("database.json");
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            JsonNode root = mapper.readTree(file);
-            ArrayNode abonneNode = (ArrayNode) root.get("abonnés");
-            for(JsonNode node: abonneNode)
-            {
-                JsonNode employe = node.get("employé");
-                if(!employe.get("email").asText().equals(e.getEmail()))
-                {
-                    MailService service = new MailService();
-                    service.envoyerEmail(
-                            e.getPrenom() + " " + e.getNom(),
-                            employe.get("email").asText(),
-                            sujet,
-                            mText
-                    );
-                }
-            }
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+        NotificationService notificationService = new NotificationService();
+        notificationService.notifierAbonne(expediteur, sujet, mText);
     }
     public void notifier(String nomDestinataire, String nomExpeditaire)
     {
         System.out.println(nomDestinataire + ", vous avez reçu un message de "+ nomExpeditaire);
     }
+
+
 }

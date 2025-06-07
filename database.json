@@ -4,73 +4,79 @@
     "prenom" : "Amadou",
     "email" : "jimlecracken13@gmail.com",
     "motDePasse" : "password",
-    "estAdmin": true
+    "estAdmin" : true
   }, {
     "nom" : "Traoré",
     "prenom" : "Fatou",
     "email" : "fatou.traore@example.com",
     "motDePasse" : "monmotdepasse123",
-    "estAdmin": false
+    "estAdmin" : false
   }, {
     "nom" : "Keita",
     "prenom" : "Moussa",
     "email" : "mkeita@example.com",
     "motDePasse" : "securepass",
-    "estAdmin": false
+    "estAdmin" : false
   }, {
     "nom" : "Camara",
     "prenom" : "Aminata",
     "email" : "aminata.camara@example.com",
     "motDePasse" : "pass1234",
-    "estAdmin": false
+    "estAdmin" : false
   }, {
     "nom" : "Kouyaté",
     "prenom" : "Ibrahim",
     "email" : "ibrahim.kouyate@example.com",
     "motDePasse" : "ibkpassword",
-    "estAdmin": false
+    "estAdmin" : false
   }, {
     "nom" : "Cissé",
     "prenom" : "Salimata",
     "email" : "sali.cisse@example.com",
     "motDePasse" : "sali2025",
-    "estAdmin": false
+    "estAdmin" : false
   }, {
     "nom" : "Diabaté",
     "prenom" : "Ousmane",
     "email" : "ousmane.d@example.com",
     "motDePasse" : "diabateOus",
-    "estAdmin": false
+    "estAdmin" : false
   }, {
     "nom" : "Barry",
     "prenom" : "Mariama",
     "email" : "mariama.barry@example.com",
     "motDePasse" : "barryM!",
-    "estAdmin": false
+    "estAdmin" : false
   }, {
     "nom" : "Bah",
     "prenom" : "Abdoul",
     "email" : "abdoul.bah@example.com",
     "motDePasse" : "bahSecure",
-    "estAdmin": false
+    "estAdmin" : false
   }, {
     "nom" : "Sylla",
     "prenom" : "Khadija",
     "email" : "khadija.sylla@example.com",
     "motDePasse" : "sylla2024",
-    "estAdmin": false
+    "estAdmin" : false
   }, {
     "nom" : "Diallo",
     "prenom" : "Amadou",
     "email" : "adiallo7485@gmail.com",
     "motDePasse" : "ceciest_moi",
-    "estAdmin": false
+    "estAdmin" : false
   }, {
     "nom" : "Namakiri",
     "prenom" : "Mori",
     "email" : "na.ankata@gmail.com",
     "motDePasse" : "motDePasse",
-    "estAdmin": false
+    "estAdmin" : false
+  }, {
+    "nom" : "soumano",
+    "prenom" : "Assan",
+    "email" : "assansoumano5gmail.com",
+    "motDePasse" : "motDePasse",
+    "estAdmin" : false
   } ],
   "abonnés" : [ {
     "employé" : {
@@ -78,9 +84,9 @@
       "prenom" : "Amadou",
       "email" : "adiallo7485@gmail.com",
       "motDePasse" : "ceciest_moi",
-      "estAdmin": false,
+      "estAdmin" : false,
       "debutAbonnement" : "Wed Jun 04 15:48:37 UTC 2025",
-      "notifications" : [ ]
+      "notifications" : [ "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo" ]
     }
   }, {
     "employé" : {
@@ -88,9 +94,9 @@
       "prenom" : "Mori",
       "email" : "na.ankata@gmail.com",
       "motDePasse" : "motDePasse",
-      "estAdmin": false,
+      "estAdmin" : false,
       "debutAbonnement" : "Wed Jun 04 15:51:37 UTC 2025",
-      "notifications" : []
+      "notifications" : [ "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo" ]
     }
   }, {
     "employé" : {
@@ -98,9 +104,19 @@
       "prenom" : "Amadou",
       "email" : "jimlecracken13@gmail.com",
       "motDePasse" : "password",
-      "estAdmin": true,
+      "estAdmin" : true,
       "debutAbonnement" : "Thu Jun 05 09:30:25 GMT 2025",
-      "notifications" : [ ]
+      "notifications" : [ "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo" ]
+    }
+  }, {
+    "employé" : {
+      "nom" : "soumano",
+      "prenom" : "Assan",
+      "email" : "assansoumano5@gmail.com",
+      "motDePasse" : "motDePasse",
+      "estAdmin" : false,
+      "debutAbonnement" : "Thu Jun 05 09:30:25 GMT 2025",
+      "notifications" : [ "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo", "Vous avez reçu un message de Diallo" ]
     }
   } ]
 }
