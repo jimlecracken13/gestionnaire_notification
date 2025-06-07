@@ -1,5 +1,7 @@
 package service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import model.Employe;
 import model.Abonne;
 import repositorie.AbonneRepository;
@@ -49,6 +51,18 @@ public class AdminService {
         if(abonne!=null)
         {
             abonneRepository.delete(abonne);
+        }
+    }
+
+    public void afficherAbonne()
+    {
+        ArrayNode abonneArray = abonneRepository.getAllAbonnes();
+        for(JsonNode node: abonneArray)
+        {
+            JsonNode employe = node.get("employe");
+            System.out.println("Nom: " + employe.get("nom"));
+            System.out.println("Prenom: "+ employe.get("prenom"));
+            System.out.println("Email: "+ employe.get("email"));
         }
     }
 

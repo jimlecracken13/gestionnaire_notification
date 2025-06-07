@@ -4,6 +4,8 @@ package service;
 import com.fasterxml.jackson.databind.JsonNode;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import jakarta.mail.MessagingException;
+import jakarta.mail.SendFailedException;
 import model.Abonne;
 import repositorie.AbonneRepository;
 import model.Employe;
@@ -11,6 +13,7 @@ import utils.Factory;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,19 +50,27 @@ public class NotificationService implements interfaces.NotificationService
 
         // Ajouter une nouvelle notification
         for (Abonne abonne : abonnes) {
-            //envoyer le message par email
-            //afficher la notification au console
-            abonne.notifier(abonne.getNom(), e.getNom());
-            //ajouter la notification à la liste de notification des abonnés
-            abonne.getNotifications().add("Vous avez reçu un message de " + e.getNom());
-            System.out.println(abonne.getNom()+" "+abonne.getNotifications().size());
             MailService service = new MailService();
-            service.envoyerEmail(
-                    e.getPrenom() + " " + e.getNom(),
-                    abonne.getEmail(),
-                    sujet,
-                    mText
-            );
+            try {
+                //envoi de l'email aux abonnés
+                service.envoyerEmail(
+                        e.getPrenom() + " " + e.getNom(),
+                        abonne.getEmail(),
+                        sujet,
+                        mText
+                );
+                //afficher la notification au console
+                abonne.notifier(abonne.getNom(), e.getNom());
+                //ajouter la notification à la liste de notification des abonnés
+                abonne.getNotifications().add("Vous avez reçu un message de " + e.getNom());
+                System.out.println(abonne.getNom()+" "+abonne.getNotifications().size());
+            } catch (SendFailedException ex) {
+                System.err.println("❌ Adresse email invalide : " + abonne.getEmail());
+            } catch (MessagingException | UnsupportedEncodingException ex) {
+                System.err.println("❌ Échec de l'envoi de l'e-mail à " + abonne.getEmail());
+                ex.printStackTrace();
+            }
+
         }
 
         //mise à jour des notifications

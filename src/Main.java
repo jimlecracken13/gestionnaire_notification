@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import model.Abonne;
 import model.Employe;
 import repositorie.EmployeRepository;
+import service.AdminService;
 import service.NotificationService;
 import utils.Utils;
 
@@ -28,6 +29,7 @@ public class Main
         NotificationService service = new NotificationService();
         //repositorie employés
         EmployeRepository employeRepository = new EmployeRepository();
+        AdminService adminService = new AdminService();
         String email;
         String motDePasse;
         Scanner entre = new Scanner(System.in);
@@ -82,6 +84,35 @@ public class Main
                                     System.out.println("8 : Envoyer un message");
                                     System.out.println("0 : Se déconnecter");
                                     choice = entre.nextInt();
+                                    switch(choice)
+                                    {
+                                        case 1:
+                                            adminService.afficherEmploye();
+                                            break;
+                                        case 2:
+                                            adminService.afficherAbonne();
+                                            break;
+                                        case 3:
+                                            adminService.ajouterAbonne();
+                                            break;
+                                        case 4:
+                                            adminService.retirerAbonne();
+                                            break;
+                                        case 5:
+                                            break;
+                                        case 6:
+                                            break;
+                                        case 7:
+                                            break;
+                                        case 8:
+                                            break;
+                                        case 0:
+                                            System.out.println("Bye");
+                                            break;
+                                        default:
+                                            System.out.println("Choix invalide");
+                                            break;
+                                    }
                                 }while(choice!=0);
                             }
                             else

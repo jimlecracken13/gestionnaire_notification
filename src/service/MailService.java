@@ -13,7 +13,7 @@ public class MailService {
     private final String expediteur = "notifplusapp@gmail.com";
     private final String motDePasse = "txjkmukvfznvxkvo";
 
-    public void envoyerEmail(String nomExpediteur, String destinataire, String sujet, String contenu) {
+    public void envoyerEmail(String nomExpediteur, String destinataire, String sujet, String contenu) throws UnsupportedEncodingException, MessagingException {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -26,7 +26,7 @@ public class MailService {
             }
         });
 
-        try {
+
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(expediteur, nomExpediteur));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinataire));
@@ -35,13 +35,5 @@ public class MailService {
 
             Transport.send(message);
             System.out.println("Email envoyé à " + destinataire);
-        }catch(SendFailedException ex){
-            System.err.println("❌ L'e-mail n'a pas été envoyé à l'adresse invalide : " + destinataire);
-        }catch (MessagingException ex) {
-            System.err.println("❌ Une erreur s'est produite lors de l'envoi de l'e-mail à : " + destinataire);
-             // Pour le debug
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
