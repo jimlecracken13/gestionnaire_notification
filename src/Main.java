@@ -135,7 +135,7 @@ public class Main
                                             service.seDesabonner(Utils.employeToAbonne(e));
                                             break;
                                         case 3:
-                                            service.afficherNotifications(Utils.employeToAbonne(e));
+                                            Utils.employeToAbonne(e).afficherNotification(e);
                                             break;
                                         case 4:
                                             //service.notifierAbonne(Utils.employeToAbonne(e));

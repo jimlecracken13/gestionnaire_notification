@@ -10,7 +10,9 @@ import utils.Factory;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class AbonneRepository {
@@ -70,7 +72,9 @@ public class AbonneRepository {
             nouvelEmploye.put("motDePasse", newAbonne.getMotDePasse());
             //je recupère la date courrente
             Date today = new Date();
-            nouvelEmploye.put("debutAbonnement", today.toString());
+            SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd MMMM yyyy", Locale.FRENCH);
+            String dateEnFrancais = sdf.format(today);
+            nouvelEmploye.put("debutAbonnement", dateEnFrancais);
             // on crée la liste des notification
             ArrayNode notiArray = mapper.createArrayNode();
             nouvelEmploye.set("notifications", notiArray);
@@ -79,24 +83,35 @@ public class AbonneRepository {
             abonneArray.add(nouveauAbonne);
             saveAllAbonnes(abonneArray);
         }
+        else
+        {
+            System.out.println("Vous êtes déjà abonné");
+        }
     }
 
     //supprimer un abonné
     public void delete(Abonne abonne)
     {
-       //recuperer la liste des abonnés
-       ArrayNode abonneArray = getAllAbonnes();
-       for(int i =0; i< abonneArray.size(); i++)
-       {
-               JsonNode employe = abonneArray.get(i).get("employé");
-               if(employe.get("email").asText().equals(abonne.getEmail()))
-               {
-                       abonneArray.remove(i);
-                       System.out.println("Vous avez été desabonné");
-                       break;
-               }
-           }
-       saveAllAbonnes(abonneArray);
+       //verifier si l'abonné existe avant de le desabonner
+        if(emailExiste(abonne.getEmail()))
+        {
+            //recuperer la liste des abonnés
+            ArrayNode abonneArray = getAllAbonnes();
+            for(int i =0; i< abonneArray.size(); i++)
+            {
+                JsonNode employe = abonneArray.get(i).get("employé");
+                if(employe.get("email").asText().equals(abonne.getEmail()))
+                {
+                    abonneArray.remove(i);
+                    System.out.println("Vous avez été desabonné");
+                    break;
+                }
+            }
+            saveAllAbonnes(abonneArray);
+        }
+        else {
+            System.out.println("Vous êtes déjà désabonné");
+        }
     }
 
     public Abonne getAbonne(String email)

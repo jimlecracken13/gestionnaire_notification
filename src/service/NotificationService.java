@@ -19,7 +19,6 @@ import java.util.List;
 
 public class NotificationService implements interfaces.NotificationService
 {
-    List<Abonne> listAbonne = new ArrayList<>();
     AbonneRepository repository = new AbonneRepository();
     @Override
     public void sabonner(Employe newAbonne)
