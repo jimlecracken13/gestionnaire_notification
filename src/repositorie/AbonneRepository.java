@@ -60,6 +60,7 @@ public class AbonneRepository {
     //ajouter un abonné
     public void ajouter(Employe newAbonne)
     {
+        //verifié qu'il n'est pas déjà abonné
         if(!emailExiste(newAbonne.getEmail()))
         {
             //creer un nouvel objet employés
@@ -82,6 +83,7 @@ public class AbonneRepository {
             nouveauAbonne.set("employé",nouvelEmploye);
             abonneArray.add(nouveauAbonne);
             saveAllAbonnes(abonneArray);
+            System.out.println("Abonnement éffectué");
         }
         else
         {
@@ -142,7 +144,7 @@ public class AbonneRepository {
             }
             else
             {
-                System.out.println("Vous n'avez aucune nofications");
+                System.out.println("Vous n'avez pas de nofications");
             }
         }
     }

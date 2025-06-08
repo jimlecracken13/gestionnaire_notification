@@ -27,8 +27,7 @@ public class NotificationService implements interfaces.NotificationService
     }
 
     //retirer un abonné de la liste des abonnées
-    public void seDesabonner(Abonne abonne)
-    {
+    public void seDesabonner(Abonne abonne) throws MessagingException, UnsupportedEncodingException {
         repository.delete(abonne);
     }
 

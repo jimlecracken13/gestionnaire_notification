@@ -80,42 +80,21 @@
   } ],
   "abonnés" : [ {
     "employé" : {
-      "nom" : "Namakiri",
-      "prenom" : "Mori",
-      "email" : "na.ankata@gmail.com",
-      "motDePasse" : "motDePasse",
-      "estAdmin" : false,
-      "debutAbonnement" : "Wed Jun 04 15:51:37 UTC 2025",
-      "notifications" : [ "Vous avez reçu un message de Diallo" ]
-    }
-  }, {
-    "employé" : {
-      "nom" : "soumano",
-      "prenom" : "Assan",
-      "email" : "assansoumano@gmail.com",
-      "motDePasse" : "motDePasse",
-      "estAdmin" : false,
-      "debutAbonnement" : "Thu Jun 05 09:30:25 GMT 2025",
-      "notifications" : [ "Vous avez reçu un message de Diallo" ]
-    }
-  }, {
-    "employé" : {
-      "nom" : "Traoré",
-      "prenom" : "Fatou",
-      "email" : "fatou.traore@example.com",
-      "motDePasse" : "monmotdepasse123",
-      "estAdmin" : false,
-      "debutAbonnement" : "Wed Jun 04 15:51:37 UTC 2025",
-      "notifications" : [ "Vous avez reçu un message de Diallo" ]
-    }
-  }, {
-    "employé" : {
       "nom" : "Diallo",
       "prenom" : "Amadou",
       "email" : "jimlecracken13@gmail.com",
       "motDePasse" : "password",
-      "debutAbonnement" : "samedi 07 juin 2025",
-      "notifications" : [ ]
+      "debutAbonnement" : "dimanche 08 juin 2025",
+      "notifications" : [ "Vous avez reçu un message de Namakiri" ]
+    }
+  }, {
+    "employé" : {
+      "nom" : "Namakiri",
+      "prenom" : "Mori",
+      "email" : "na.ankata@gmail.com",
+      "motDePasse" : "motDePasse",
+      "debutAbonnement" : "dimanche 08 juin 2025",
+      "notifications" : [ "Vous avez reçu un message de Diallo" ]
     }
   } ]
 }

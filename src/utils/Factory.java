@@ -22,7 +22,7 @@ public class Factory {
         Date dateDebut = null;
         try {
             String dateStr = node.get("debutAbonnement").asText(); // adapte le nom du champ
-            SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.FRENCH);
+            SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd MMMM yyyy", Locale.FRENCH);
             dateDebut = sdf.parse(dateStr);
         } catch (ParseException e) {
             e.printStackTrace();

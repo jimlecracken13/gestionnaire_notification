@@ -67,7 +67,14 @@ public class Abonne extends Employe implements Observer
 
     public void afficherNotification(Abonne e)
     {
-        abonneRepository.getNotifications(this);
+        if(abonneRepository.emailExiste(e.getEmail()))
+        {
+            abonneRepository.getNotifications(this);
+        }
+        else
+        {
+            System.out.println("Veillez vous abonnez");
+        }
     }
 
 

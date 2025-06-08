@@ -3,6 +3,7 @@ package repositorie;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import model.Employe;
 
 import java.io.File;
@@ -25,6 +26,18 @@ public class EmployeRepository {
         }
         return (ArrayNode) root.get("employés");
     }
+
+    //Enregistre les employés
+    private void saveAllEmployes(ArrayNode employeArray) {
+        try {
+            JsonNode root = mapper.readTree(file);
+            ((ObjectNode) root).set("employés",employeArray);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(file, root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //la liste des employés
     public List<Employe> getListEmploye()
     {
@@ -69,6 +82,7 @@ public class EmployeRepository {
                     String nom = node.get("nom").asText();
                     String prenom = node.get("prenom").asText();
                     em = new Employe(nom, prenom, email, motDePasse);
+                    em.setEstAdmin(node.get("estAdmin").asBoolean());
                     break;
                 }
             }
@@ -93,4 +107,34 @@ public class EmployeRepository {
         }
         return em;
     }
+
+    //Mettre à jour un employé
+    public void updateEmploye(Employe updatedEmploye) {
+        ArrayNode employeArray = getAllEmploye(); // méthode qui lit ton fichier JSON complet
+        boolean updated = false;
+
+        for (JsonNode node : employeArray) {
+            ObjectNode employeNode = (ObjectNode) node.get("employés");
+            String email = employeNode.get("email").asText();
+
+            if (email.equals(updatedEmploye.getEmail())) {
+                employeNode.put("nom", updatedEmploye.getNom());
+                employeNode.put("prenom", updatedEmploye.getPrenom());
+                employeNode.put("motDePasse", updatedEmploye.getMotDePasse());
+                employeNode.put("estAdmin", updatedEmploye.estAdmin());
+                updated = true;
+                break;
+            }
+        }
+
+        if (updated) {
+            saveAllEmployes(employeArray); // méthode qui écrase le fichier JSON avec la nouvelle liste
+            System.out.println("✅ Employé " + updatedEmploye.getEmail() + " mis à jour avec succès.");
+        } else {
+            System.out.println("❌ Employé non trouvé pour mise à jour : " + updatedEmploye.getEmail());
+        }
+    }
+
+
+
 }
