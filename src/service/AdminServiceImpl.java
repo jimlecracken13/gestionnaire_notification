@@ -9,21 +9,24 @@ import repositorie.AbonneRepository;
 import repositorie.EmployeRepository;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class AdminService extends NotificationService{
+public class AdminServiceImpl extends NotificationServiceImpl {
     EmployeRepository employeRepository = new EmployeRepository();
     AbonneRepository abonneRepository = new AbonneRepository();
     Scanner entre = new Scanner(System.in);
     public void afficherEmploye()
     {
         List<Employe> listEmploye = employeRepository.getListEmploye();
+        System.out.println("La liste des employés");
+        int i = 1;
         for (Employe employe : listEmploye) {
+            System.out.println(i+" ----------------------------------------");
             System.out.println("Nom: " + employe.getNom());
             System.out.println("Prenom: " + employe.getPrenom());
             System.out.println("Email: " + employe.getEmail());
+            i++;
         }
     }
 
@@ -58,12 +61,15 @@ public class AdminService extends NotificationService{
     public void afficherAbonne()
     {
         ArrayNode abonneArray = abonneRepository.getAllAbonnes();
+        int i = 1;
         for(JsonNode node: abonneArray)
         {
             JsonNode employe = node.get("employé");
+            System.out.println(i+" ----------------------------------------");
             System.out.println("Nom: " + employe.get("nom"));
             System.out.println("Prenom: "+ employe.get("prenom"));
             System.out.println("Email: "+ employe.get("email"));
+            i++;
         }
     }
 
@@ -79,15 +85,6 @@ public class AdminService extends NotificationService{
             return;
         }
 
-        // Envoi d’un email d’information
-        MailService mailService = new MailService();
-        mailService.envoyerEmail(
-                e.getPrenom() + " " + e.getNom(),
-                emailNouveauAdmin,
-                "Nomination en tant qu'administrateur",
-                e.getNom() + " vous a délégué le rôle d'administrateur."
-        );
-
         // Mise à jour des rôles
         Employe ancienAdmin = employeRepository.getEmploye(e.getEmail());
         if (ancienAdmin != null) {
@@ -99,6 +96,14 @@ public class AdminService extends NotificationService{
         employeRepository.updateEmploye(ancienAdmin);
         employeRepository.updateEmploye(nouveauAdmin);
 
+        // Envoi d’un email d’information
+        MailService mailService = new MailService();
+        mailService.envoyerEmail(
+                e.getPrenom() + " " + e.getNom(),
+                emailNouveauAdmin,
+                "Nomination en tant qu'administrateur",
+                e.getNom() + " vous a délégué le rôle d'administrateur."
+        );
         System.out.println("✅ Le rôle d'administrateur a été transféré à " + nouveauAdmin.getPrenom() + " " + nouveauAdmin.getNom());
 
         // se desabonner

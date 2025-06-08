@@ -4,31 +4,31 @@ package service;
 import com.fasterxml.jackson.databind.JsonNode;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import interfaces.Observer;
+import interfaces.Subject;
 import jakarta.mail.MessagingException;
 import jakarta.mail.SendFailedException;
 import model.Abonne;
 import repositorie.AbonneRepository;
-import model.Employe;
 import utils.Factory;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationService implements interfaces.NotificationService
+public class NotificationServiceImpl implements Subject
 {
     AbonneRepository repository = new AbonneRepository();
+
     @Override
-    public void sabonner(Employe newAbonne)
+    public void sabonner(Observer newAbonne)
     {
-        repository.ajouter(newAbonne);
+        repository.ajouter((Abonne) newAbonne);
     }
 
     //retirer un abonné de la liste des abonnées
-    public void seDesabonner(Abonne abonne) throws MessagingException, UnsupportedEncodingException {
-        repository.delete(abonne);
+    public void seDesabonner(Observer abonne) throws MessagingException, UnsupportedEncodingException {
+        repository.delete((Abonne) abonne);
     }
 
     //notifier tous les abonnés de la liste
@@ -98,6 +98,13 @@ public class NotificationService implements interfaces.NotificationService
 
     public void afficherNotifications(Abonne e)
     {
-        repository.getNotifications(e);
+        if(repository.emailExiste(e.getEmail()))
+        {
+            repository.getNotifications(e);
+        }
+        else
+        {
+            System.out.println("Veillez vous abonnez");
+        }
     }
 }

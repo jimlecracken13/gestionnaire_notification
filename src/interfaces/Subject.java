@@ -7,12 +7,13 @@ import model.Employe;
 import java.io.UnsupportedEncodingException;
 
 // interface pour notification service
-public interface NotificationService {
+public interface Subject {
    //methode pour s'abonner
-   void sabonner(Employe e);
+   void sabonner(Observer e);
 
     //methode pour se desabonner
-    void seDesabonner(Abonne e) throws MessagingException, UnsupportedEncodingException;
+    void seDesabonner(Observer e) throws MessagingException, UnsupportedEncodingException;
+
 
     //notifier les abonnés
     void notifierAbonne(Abonne expediteur, String sujet, String message);

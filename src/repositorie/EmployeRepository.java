@@ -110,11 +110,11 @@ public class EmployeRepository {
 
     //Mettre à jour un employé
     public void updateEmploye(Employe updatedEmploye) {
-        ArrayNode employeArray = getAllEmploye(); // méthode qui lit ton fichier JSON complet
+        ArrayNode employeArray = getAllEmploye(); // méthode qui lit le fichier JSON complet
         boolean updated = false;
 
         for (JsonNode node : employeArray) {
-            ObjectNode employeNode = (ObjectNode) node.get("employés");
+            ObjectNode employeNode = (ObjectNode) node;
             String email = employeNode.get("email").asText();
 
             if (email.equals(updatedEmploye.getEmail())) {

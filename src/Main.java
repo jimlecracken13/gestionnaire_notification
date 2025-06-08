@@ -1,19 +1,13 @@
 
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import jakarta.mail.MessagingException;
 import model.Abonne;
 import model.Employe;
-import repositorie.AbonneRepository;
 import repositorie.EmployeRepository;
-import service.AdminService;
-import service.NotificationService;
+import service.AdminServiceImpl;
+import service.NotificationServiceImpl;
 import utils.Utils;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 import static utils.Utils.estEmailValide;
@@ -28,11 +22,10 @@ public class Main
     public static void main(String[] args) throws MessagingException, UnsupportedEncodingException {
 
         //NotificationService instance
-        NotificationService service = new NotificationService();
+        NotificationServiceImpl service = new NotificationServiceImpl();
         //repositorie employés
         EmployeRepository employeRepository = new EmployeRepository();
-        AbonneRepository abonneRepository = new AbonneRepository();
-        AdminService adminService = new AdminService();
+        AdminServiceImpl adminService = new AdminServiceImpl();
         String email;
         String motDePasse;
         Scanner entre = new Scanner(System.in);
@@ -70,13 +63,14 @@ public class Main
                         {
                             Employe e = employeRepository.getEmploye(email,motDePasse);
                             //convertir une seule fois en abonné
-                            Abonne abonneConnecte = Utils.employeToAbonne(e);;
+                            Abonne abonneConnecte = Utils.employeToAbonne(e);
 
                             int choice;
                             System.out.println(e.estAdmin());
                             //verifier que si l'employé est admin
                             if(e.estAdmin())
                             {
+                                adminService.sabonner(abonneConnecte);
                                 System.out.println("Bonjour cher admin "+e.getPrenom()+
                                         " "+e.getNom());
                                 do{
@@ -85,11 +79,10 @@ public class Main
                                     System.out.println("2: Afficher les abonnés");
                                     System.out.println("3: Ajouter un abonné");
                                     System.out.println("4: Supprimer un abonné");
-                                    System.out.println("5: S'abonner");
-                                    System.out.println("6: Se désabonner");
-                                    System.out.println("7 : Afficher mes notifications");
-                                    System.out.println("8 : Envoyer un message");
-                                    System.out.println("0 : Se déconnecter");
+                                    System.out.println("5: Se désabonner");
+                                    System.out.println("6: Afficher mes notifications");
+                                    System.out.println("7: Envoyer un message");
+                                    System.out.println("0: Se déconnecter");
                                     choice = entre.nextInt();
                                     switch(choice)
                                     {
@@ -106,15 +99,13 @@ public class Main
                                             adminService.retirerAbonne();
                                             break;
                                         case 5:
-                                            //adminService.sabonner(e);
+                                            adminService.seDesabonner(abonneConnecte);
+                                            choice=0;
                                             break;
                                         case 6:
-                                            adminService.seDesabonner(abonneConnecte);
-                                            break;
-                                        case 7:
                                             adminService.afficherNotifications(abonneConnecte);
                                             break;
-                                        case 8:
+                                        case 7:
                                             abonneConnecte.envoyerMessage(abonneConnecte);
                                             break;
                                         case 0:
@@ -140,13 +131,13 @@ public class Main
                                     switch (choice)
                                     {
                                         case 1:
-                                            service.sabonner(e);
+                                            service.sabonner(abonneConnecte);
                                             break;
                                         case 2:
                                             service.seDesabonner(abonneConnecte);
                                             break;
                                         case 3:
-                                            abonneConnecte.afficherNotification(abonneConnecte);
+                                            service.afficherNotifications(abonneConnecte);
                                             break;
                                         case 4:
                                             abonneConnecte.envoyerMessage(abonneConnecte);

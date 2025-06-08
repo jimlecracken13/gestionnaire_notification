@@ -1,15 +1,9 @@
 package model;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import interfaces.Observer;
 import repositorie.AbonneRepository;
-import service.MailService;
-import service.NotificationService;
+import service.NotificationServiceImpl;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,8 +46,8 @@ public class Abonne extends Employe implements Observer
             String sujet = mScanner.nextLine();
             System.out.println("Message: ");
             String mText = mScanner.nextLine();
-            NotificationService notificationService = new NotificationService();
-            notificationService.notifierAbonne(expediteur, sujet, mText);
+            NotificationServiceImpl notificationServiceImpl = new NotificationServiceImpl();
+            notificationServiceImpl.notifierAbonne(expediteur, sujet, mText);
         }
         else
         {
@@ -65,17 +59,6 @@ public class Abonne extends Employe implements Observer
         System.out.println(nomDestinataire + ", vous avez reçu un message de "+ nomExpeditaire);
     }
 
-    public void afficherNotification(Abonne e)
-    {
-        if(abonneRepository.emailExiste(e.getEmail()))
-        {
-            abonneRepository.getNotifications(this);
-        }
-        else
-        {
-            System.out.println("Veillez vous abonnez");
-        }
-    }
 
 
 }
