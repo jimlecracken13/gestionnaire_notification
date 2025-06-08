@@ -33,8 +33,9 @@ public class NotificationServiceImpl implements Subject
 
     //notifier tous les abonnés de la liste
     @Override
-    public void notifierAbonne(Abonne e, String sujet, String mText) {
+    public void notifierAbonne(Observer exp, String sujet, String mText) {
         ArrayNode abonneArray = repository.getAllAbonnes();
+        Abonne e = (Abonne) exp;
         List<Abonne> abonnes = new ArrayList<>();
         for(JsonNode node: abonneArray)
         {

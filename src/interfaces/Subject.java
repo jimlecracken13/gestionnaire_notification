@@ -16,5 +16,5 @@ public interface Subject {
 
 
     //notifier les abonnés
-    void notifierAbonne(Abonne expediteur, String sujet, String message);
+    void notifierAbonne(Observer expediteur, String sujet, String message);
 }
