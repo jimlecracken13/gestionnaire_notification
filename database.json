@@ -70,7 +70,7 @@
     "prenom" : "Mori",
     "email" : "na.ankata@gmail.com",
     "motDePasse" : "motDePasse",
-    "estAdmin" : true
+    "estAdmin" : false
   }, {
     "nom" : "soumano",
     "prenom" : "Assan",
@@ -82,22 +82,91 @@
     "prenom" : "kadiatou",
     "email" : "kadiatou2021tall@gmail.com",
     "motDePasse" : "motDePasse",
-    "estAdmin" : false
+    "estAdmin" : true
   }, {
     "nom" : "sanmo",
     "prenom" : "hamza",
-    "email" : "sanmohamza@gmail.com",
+    "email" : "hamzasanmo@gmail.com",
     "motDePasse" : "motDePasse",
     "estAdmin" : false
   } ],
   "abonnés" : [ {
+    "employé" : {
+      "nom" : "tall",
+      "prenom" : "kadiatou",
+      "email" : "kadiatou2021tall@gmail.com",
+      "motDePasse" : "motDePasse",
+      "debutAbonnement" : "lundi 09 juin 2025",
+      "notifications" : [ {
+        "message" : "Vous avez reçu un message de Diallo",
+        "date" : "lundi 09 juin 2025",
+        "heure" : "17:06:54.967490"
+      } ]
+    }
+  }, {
+    "employé" : {
+      "nom" : "sanmo",
+      "prenom" : "hamza",
+      "email" : "hamzasanmo@gmail.com",
+      "motDePasse" : "motDePasse",
+      "debutAbonnement" : "lundi 09 juin 2025",
+      "notifications" : [ {
+        "message" : "Vous avez reçu un message de Diallo",
+        "date" : "lundi 09 juin 2025",
+        "heure" : "17:06:57.224396900"
+      } ]
+    }
+  }, {
+    "employé" : {
+      "nom" : "Diallo",
+      "prenom" : "Amadou",
+      "email" : "adiallo7485@gmail.com",
+      "motDePasse" : "ceciest_moi",
+      "debutAbonnement" : "lundi 09 juin 2025",
+      "notifications" : [ {
+        "message" : "Vous avez reçu un message de Diallo",
+        "date" : "lundi 09 juin 2025",
+        "heure" : "17:04:40.827138400"
+      } ]
+    }
+  }, {
     "employé" : {
       "nom" : "Diallo",
       "prenom" : "Amadou",
       "email" : "jimlecracken13@gmail.com",
       "motDePasse" : "password",
       "debutAbonnement" : "lundi 09 juin 2025",
-      "notifications" : [ ]
+      "notifications" : [ {
+        "message" : "Vous avez reçu un message de Diallo",
+        "date" : "lundi 09 juin 2025",
+        "heure" : "17:06:59.373351"
+      } ]
+    }
+  }, {
+    "employé" : {
+      "nom" : "Barry",
+      "prenom" : "Mariama",
+      "email" : "mariama.barry@example.com",
+      "motDePasse" : "barryM!",
+      "debutAbonnement" : "lundi 09 juin 2025",
+      "notifications" : [ {
+        "message" : "Vous avez reçu un message de Diallo",
+        "date" : "lundi 09 juin 2025",
+        "heure" : "17:07:01.419521700"
+      } ]
+    }
+  }, {
+    "employé" : {
+      "nom" : "Camara",
+      "prenom" : "Aminata",
+      "email" : "aminata.camara@example.com",
+      "motDePasse" : "pass1234",
+      "debutAbonnement" : "lundi 09 juin 2025",
+      "notifications" : [ {
+        "message" : "Vous avez reçu un message de Diallo",
+        "date" : "lundi 09 juin 2025",
+        "heure" : "17:07:03.568637700"
+      } ]
     }
   } ]
 }

@@ -3,6 +3,7 @@ package utils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import model.Abonne;
+import model.Message;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,10 +30,14 @@ public class Factory {
         }
         ArrayNode notifArray = (ArrayNode) node.get("notifications");
 
-        List<String> notifs = new ArrayList<>();
+        List<Message> notifs = new ArrayList<>();
+        /*
         for (JsonNode n : notifArray) {
-            notifs.add(n.asText());
-        }
+            Message message = new Message(n.get("message").asText());
+            message.setDate(n.get("date").asText());
+            message.setTime(n.get("time").asText());
+            notifs.add(message);
+        }*/
         Abonne abonne = new Abonne(nom, prenom, email, motDePasse);
         abonne.setNotifications(notifs);
         abonne.setDebutAbonnement(dateDebut);

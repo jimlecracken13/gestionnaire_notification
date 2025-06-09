@@ -12,15 +12,15 @@ import java.util.Scanner;
 public class Abonne extends Employe implements Observer
 {
     //constructeur de la classe
-    List<String> notifications = new ArrayList<>();
+    List<Message> notifications = new ArrayList<>();
     Date debutAbonnement;
     AbonneRepository abonneRepository = new AbonneRepository();
 
-    public List<String> getNotifications() {
+    public List<Message> getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(List<String> notifications) {
+    public void setNotifications(List<Message> notifications) {
         this.notifications = notifications;
     }
 
@@ -35,6 +35,7 @@ public class Abonne extends Employe implements Observer
     public Abonne(String nom, String prenom, String email, String motDePasse) {
         super(nom, prenom, email, motDePasse);
     }
+
     public void envoyerMessage(Abonne expediteur)
     {
         //verifier s'il est abonné
@@ -54,6 +55,7 @@ public class Abonne extends Employe implements Observer
             System.out.println("Veillez vous abonné");
         }
     }
+
     public void notifier(String nomDestinataire, String nomExpeditaire)
     {
         System.out.println(nomDestinataire + ", vous avez reçu un message de "+ nomExpeditaire);

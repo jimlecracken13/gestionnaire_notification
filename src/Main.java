@@ -36,10 +36,11 @@ public class Main
 
         int choix=-1;
         boolean correct = false;
-        System.out.println("Bienvenue sur Notif+, pour mieux gérer vos notifications");
+        System.out.println("********************************************BIENVENUE SUR NOTIF+, POUR MIEUX GERER VOS NOTIFICATIONS***************************************************");
         do{
-            System.out.println("1. Se connecter");
-            System.out.println("0. Quitter");
+            System.out.println("1. Se connecter ✅");
+            System.out.println("__________________");
+            System.out.println("0. Quitter ❌");
             try
             {
                 choix = entre.nextInt();

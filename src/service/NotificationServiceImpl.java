@@ -3,22 +3,27 @@ package service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 //import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import interfaces.Observer;
 import interfaces.Subject;
 import jakarta.mail.MessagingException;
 import jakarta.mail.SendFailedException;
 import model.Abonne;
+import model.Message;
 import repositorie.AbonneRepository;
 import utils.Factory;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationServiceImpl implements Subject
 {
     AbonneRepository repository = new AbonneRepository();
+    ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public void sabonner(Observer newAbonne)
@@ -61,7 +66,10 @@ public class NotificationServiceImpl implements Subject
                 //afficher la notification au console
                 abonne.notifier(abonne.getNom(), e.getNom());
                 //ajouter la notification à la liste de notification des abonnés
-                abonne.getNotifications().add("Vous avez reçu un message de " + e.getNom());
+                Message message = new Message("Vous avez reçu un message de " + e.getNom());
+                LocalDateTime date = LocalDateTime.now();
+                message.setCurrentdate(date);
+                abonne.getNotifications().add(message);
                 System.out.println(abonne.getNom()+" "+abonne.getNotifications().size());
             } catch (SendFailedException ex) {
                 System.err.println("❌ Adresse email invalide : " + abonne.getEmail());
@@ -88,8 +96,12 @@ public class NotificationServiceImpl implements Subject
                 {
                     ArrayNode notifNode = (ArrayNode) employe.get("notifications");
                     notifNode.removeAll();
-                    for (String notif : abonne.getNotifications()) {
-                        notifNode.add(notif);
+                    for (Message notif : abonne.getNotifications()) {
+                        ObjectNode message = mapper.createObjectNode();
+                        message.put("message",notif.getMessage());
+                        message.put("date", notif.getDate());
+                        message.put("heure", notif.getTime());
+                        notifNode.add(message);
                     }
                 }
             }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import model.Abonne;
 import model.Employe;
+import model.Message;
 import utils.Factory;
 
 import java.io.File;
@@ -40,6 +41,7 @@ public class AbonneRepository {
             throw new RuntimeException(e);
         }
     }
+
     //verifié si est déjà abonné
     public boolean emailExiste(String email)
     {
@@ -138,9 +140,16 @@ public class AbonneRepository {
         {
             if(!ab.getNotifications().isEmpty())
             {
-                for(String notifications : ab.getNotifications())
+                int i = 1;
+                for(Message notifications : ab.getNotifications())
                 {
-                    System.out.println(notifications);
+                    System.out.println(i+" ---------------------------");
+                    //afficher les messages
+                    System.out.println(notifications.getMessage());
+                    //afficher la date et l'heure d'envois de la notification
+                    System.out.println(notifications.getDate());
+                    System.out.println(notifications.getTime());
+                    i++;
                 }
             }
             else

@@ -55,20 +55,6 @@ public class EmployeRepository {
 
     }
 
-    //verifier si l'email existe parmi les employés
-    public boolean emailExiste(String email)
-    {
-        ArrayNode employeNode = getAllEmploye();
-        for(JsonNode employe: employeNode)
-        {
-            if(employe.get("email").asText().equals(email))
-            {
-                    return true;
-
-            }
-        }
-        return false;
-    }
     //recupère un employé à travers son email et son mot de passe
     public Employe getEmploye(String email, String motDePasse)
     {
