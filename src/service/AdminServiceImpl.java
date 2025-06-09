@@ -110,5 +110,20 @@ public class AdminServiceImpl extends NotificationServiceImpl {
         super.seDesabonner(e);
     }
 
-
+    public void verifierAbonnement()
+    {
+        System.out.println("Saisissez l'email");
+        String email = entre.nextLine();
+        if(repository.getAbonne(email)!=null)
+        {
+            Abonne abonne = repository.getAbonne(email);
+            System.out.println("Nom: "+abonne.getNom());
+            System.out.println("Prenom: "+abonne.getPrenom());
+            System.out.println("Email: "+abonne.getEmail());
+        }
+        else
+        {
+            System.out.println("Cet email n'est pas abonné");
+        }
+    }
 }
