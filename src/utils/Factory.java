@@ -31,13 +31,20 @@ public class Factory {
         ArrayNode notifArray = (ArrayNode) node.get("notifications");
 
         List<Message> notifs = new ArrayList<>();
-        /*
+
         for (JsonNode n : notifArray) {
-            Message message = new Message(n.get("message").asText());
-            message.setDate(n.get("date").asText());
-            message.setTime(n.get("time").asText());
-            notifs.add(message);
-        }*/
+            if(!n.isNull())
+            {
+                String msg = n.get("message").asText();
+                String dateStr = n.get("date").asText();
+                String heureStr = n.get("heure").asText();
+
+                Message message = new Message(msg);
+                message.setDate(dateStr);
+                message.setTime(heureStr);
+                notifs.add(message);
+            }
+        }
         Abonne abonne = new Abonne(nom, prenom, email, motDePasse);
         abonne.setNotifications(notifs);
         abonne.setDebutAbonnement(dateDebut);

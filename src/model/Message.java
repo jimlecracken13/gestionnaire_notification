@@ -9,30 +9,25 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class Message {
-    String message;
-    LocalDateTime currentdate;
+    private final String message;
+    private final LocalDateTime currentdate;
     String date;
     String time;
     //constructeur de la classe
     public Message(String message)
     {
         this.message = message;
+        this.currentdate = LocalDateTime.now();
     }
     public LocalDateTime getCurrentdate() {
         return currentdate;
     }
 
-    public void setCurrentdate(LocalDateTime currentdate) {
-        this.currentdate = currentdate;
-    }
 
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public String  getDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd MMMM yyyy", Locale.FRENCH);

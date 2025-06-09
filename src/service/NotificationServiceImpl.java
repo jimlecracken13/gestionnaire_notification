@@ -53,7 +53,8 @@ public class NotificationServiceImpl implements Subject
         }
 
         // Ajouter une nouvelle notification
-        for (Abonne abonne : abonnes) {
+        for (Abonne abonne : abonnes)
+        {
             MailService service = new MailService();
             try {
                 //envoi de l'email aux abonnés
@@ -65,10 +66,10 @@ public class NotificationServiceImpl implements Subject
                 );
                 //afficher la notification au console
                 abonne.notifier(abonne.getNom(), e.getNom());
+                Message message = new Message("Vous avez reussi un message de "+e.getNom());
+                message.setDate(message.getDate());          // juste pour sérialisation, c'est OK
+                message.setTime(message.getTime());
                 //ajouter la notification à la liste de notification des abonnés
-                Message message = new Message("Vous avez reçu un message de " + e.getNom());
-                LocalDateTime date = LocalDateTime.now();
-                message.setCurrentdate(date);
                 abonne.getNotifications().add(message);
                 System.out.println(abonne.getNom()+" "+abonne.getNotifications().size());
             } catch (SendFailedException ex) {
@@ -98,6 +99,8 @@ public class NotificationServiceImpl implements Subject
                     notifNode.removeAll();
                     for (Message notif : abonne.getNotifications()) {
                         ObjectNode message = mapper.createObjectNode();
+                        System.out.println(notif.getDate());
+                        System.out.println(" "+abonne.getNom()+" "+notif.getTime());
                         message.put("message",notif.getMessage());
                         message.put("date", notif.getDate());
                         message.put("heure", notif.getTime());
