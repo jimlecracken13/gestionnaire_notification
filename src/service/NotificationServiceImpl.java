@@ -67,8 +67,6 @@ public class NotificationServiceImpl implements Subject
                 //afficher la notification au console
                 abonne.notifier(abonne.getNom(), e.getNom());
                 Message message = new Message("Vous avez reussi un message de "+e.getNom());
-                message.setDate(message.getDate());          // juste pour sérialisation, c'est OK
-                message.setTime(message.getTime());
                 //ajouter la notification à la liste de notification des abonnés
                 abonne.getNotifications().add(message);
                 System.out.println(abonne.getNom()+" "+abonne.getNotifications().size());

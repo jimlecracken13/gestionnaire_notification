@@ -39,9 +39,7 @@ public class Factory {
                 String dateStr = n.get("date").asText();
                 String heureStr = n.get("heure").asText();
 
-                Message message = new Message(msg);
-                message.setDate(dateStr);
-                message.setTime(heureStr);
+                Message message = new Message(msg,dateStr,heureStr);
                 notifs.add(message);
             }
         }

@@ -18,6 +18,17 @@ public class Message {
     {
         this.message = message;
         this.currentdate = LocalDateTime.now();
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EEEE dd MMMM yyyy", Locale.FRENCH);
+        this.date = this.currentdate.toLocalDate().format(dateFormatter);
+        this.time = this.currentdate.toLocalTime().toString();
+    }
+
+    // Constructeur pour les messages déjà existants
+    public Message(String message, String date, String time) {
+        this.message = message;
+        this.date = date;
+        this.time = time;
+        this.currentdate = null; // inutilisé dans ce cas
     }
     public LocalDateTime getCurrentdate() {
         return currentdate;
@@ -30,12 +41,10 @@ public class Message {
 
 
     public String  getDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE dd MMMM yyyy", Locale.FRENCH);
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("EEEE dd MMMM yyyy");
-        return date = currentdate.toLocalDate().format(myFormatObj);
+      return date;
     }
     public String getTime(){
-        return time = currentdate.toLocalTime().toString();
+        return time ;
     }
     public void setDate(String date)
     {
