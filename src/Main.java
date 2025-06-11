@@ -103,7 +103,7 @@ public class Main
                                                         adminService.ajouterAbonne();
                                                         break;
                                                     case 4:
-                                                        adminService.retirerAbonne();
+                                                        adminService.retirerAbonne(abonneConnecte);
                                                         break;
                                                     case 5:
                                                         adminService.seDesabonner(abonneConnecte);

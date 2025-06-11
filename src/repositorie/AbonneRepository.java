@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import interfaces.IAbonneRepository;
+import interfaces.Observer;
 import model.Abonne;
 import model.Employe;
 import model.Message;
@@ -16,11 +18,12 @@ import java.util.Date;
 import java.util.Locale;
 
 
-public class AbonneRepository {
+public class AbonneRepository implements IAbonneRepository {
     ObjectMapper mapper = new ObjectMapper();
     File file = new File("database.json");
+
     //recupérer tous les abonnés
-    public ArrayNode getAllAbonnes() {
+    public ArrayNode getAllElements() {
         JsonNode root = null;
         try {
             root = mapper.readTree(file);
@@ -31,7 +34,7 @@ public class AbonneRepository {
     }
 
     //enregistrer tous les abonnés
-    public void saveAllAbonnes(ArrayNode abonneArray)
+    public void saveAllElements(ArrayNode abonneArray)
     {
         try {
             JsonNode root = mapper.readTree(file);
@@ -45,7 +48,7 @@ public class AbonneRepository {
     //verifié si est déjà abonné
     public boolean emailExiste(String email)
     {
-        ArrayNode abonneNode = getAllAbonnes();
+        ArrayNode abonneNode = getAllElements();
         for(JsonNode node: abonneNode)
         {
             JsonNode employe = node.get("employé");
@@ -68,7 +71,7 @@ public class AbonneRepository {
         {
             //creer un nouvel objet employés
             ObjectNode nouvelEmploye = mapper.createObjectNode();
-            ArrayNode abonneArray = getAllAbonnes();
+            ArrayNode abonneArray = getAllElements();
             //ajout des champs
             nouvelEmploye.put("nom",newAbonne.getNom());
             nouvelEmploye.put("prenom",newAbonne.getPrenom());
@@ -85,7 +88,7 @@ public class AbonneRepository {
             ObjectNode nouveauAbonne = mapper.createObjectNode();
             nouveauAbonne.set("employé",nouvelEmploye);
             abonneArray.add(nouveauAbonne);
-            saveAllAbonnes(abonneArray);
+            saveAllElements(abonneArray);
             System.out.println("Abonnement éffectué");
         }
         else
@@ -95,13 +98,14 @@ public class AbonneRepository {
     }
 
     //supprimer un abonné
-    public void delete(Abonne abonne)
+    public void delete(Observer observer)
     {
        //verifier si l'abonné existe avant de le desabonner
+        Abonne abonne = (Abonne) observer;
         if(emailExiste(abonne.getEmail()))
         {
             //recuperer la liste des abonnés
-            ArrayNode abonneArray = getAllAbonnes();
+            ArrayNode abonneArray = getAllElements();
             for(int i =0; i< abonneArray.size(); i++)
             {
                 JsonNode employe = abonneArray.get(i).get("employé");
@@ -112,16 +116,18 @@ public class AbonneRepository {
                     break;
                 }
             }
-            saveAllAbonnes(abonneArray);
+            //enlever ça voir si ça marche
+            saveAllElements(abonneArray);
         }
         else {
             System.out.println("Vous êtes déjà désabonné");
         }
     }
 
-    public Abonne getAbonne(String email)
+    //recupérer un abonné par son Email
+    public Abonne getElement(String email)
     {
-        ArrayNode abonneArray = getAllAbonnes();
+        ArrayNode abonneArray = getAllElements();
         for(JsonNode node : abonneArray)
         {
             if(node.get("employé").get("email").asText().equals(email))
@@ -133,9 +139,11 @@ public class AbonneRepository {
         return null;
     }
 
-    public void getNotifications(Abonne abonne)
+    //recupérer la liste des notifications d'un abonné
+    public void getNotifications(Observer observer)
     {
-        Abonne ab = getAbonne(abonne.getEmail());
+        Abonne abonne = (Abonne)observer;
+        Abonne ab = getElement(abonne.getEmail());
         if(ab!=null)
         {
             if(!ab.getNotifications().isEmpty())

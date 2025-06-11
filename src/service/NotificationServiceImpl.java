@@ -16,7 +16,6 @@ import repositorie.AbonneRepository;
 import utils.Factory;
 
 import java.io.UnsupportedEncodingException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class NotificationServiceImpl implements Subject
     //notifier tous les abonnés de la liste
     @Override
     public void notifierAbonne(Observer exp, String sujet, String mText) {
-        ArrayNode abonneArray = repository.getAllAbonnes();
+        ArrayNode abonneArray = repository.getAllElements();
         Abonne e = (Abonne) exp;
         List<Abonne> abonnes = new ArrayList<>();
         for(JsonNode node: abonneArray)
@@ -62,6 +61,7 @@ public class NotificationServiceImpl implements Subject
                         e.getPrenom() + " " + e.getNom(),
                         abonne.getEmail(),
                         sujet,
+                        "Bonjour "+abonne.getNom().toUpperCase()+",\n"+
                         mText
                 );
                 //afficher la notification au console
@@ -69,7 +69,6 @@ public class NotificationServiceImpl implements Subject
                 Message message = new Message("Vous avez reussi un message de "+e.getNom());
                 //ajouter la notification à la liste de notification des abonnés
                 abonne.getNotifications().add(message);
-                System.out.println(abonne.getNom()+" "+abonne.getNotifications().size());
             } catch (SendFailedException ex) {
                 System.err.println("❌ Adresse email invalide : " + abonne.getEmail());
             } catch (MessagingException | UnsupportedEncodingException ex) {
@@ -97,8 +96,6 @@ public class NotificationServiceImpl implements Subject
                     notifNode.removeAll();
                     for (Message notif : abonne.getNotifications()) {
                         ObjectNode message = mapper.createObjectNode();
-                        System.out.println(notif.getDate());
-                        System.out.println(" "+abonne.getNom()+" "+notif.getTime());
                         message.put("message",notif.getMessage());
                         message.put("date", notif.getDate());
                         message.put("heure", notif.getTime());
@@ -107,7 +104,7 @@ public class NotificationServiceImpl implements Subject
                 }
             }
         }
-        repository.saveAllAbonnes(abonneArray);
+        repository.saveAllElements(abonneArray);
     }
 
     public void afficherNotifications(Abonne e)

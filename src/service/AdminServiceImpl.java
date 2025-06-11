@@ -16,6 +16,7 @@ public class AdminServiceImpl extends NotificationServiceImpl {
     EmployeRepository employeRepository = new EmployeRepository();
     AbonneRepository abonneRepository = new AbonneRepository();
     Scanner entre = new Scanner(System.in);
+    //pour afficher la liste des employés par l'admin
     public void afficherEmploye()
     {
         List<Employe> listEmploye = employeRepository.getListEmploye();
@@ -29,7 +30,7 @@ public class AdminServiceImpl extends NotificationServiceImpl {
             i++;
         }
     }
-
+    //pour ajouter un abonné par admin
     public void ajouterAbonne()
     {
         System.out.println("Donner l'email");
@@ -46,21 +47,28 @@ public class AdminServiceImpl extends NotificationServiceImpl {
         }
 
     }
-
-    public void retirerAbonne()
+    //pour retirer un abonné par l'admin
+    public void retirerAbonne(Abonne abonne)
     {
         System.out.print("Email de l'abonné:");
         String email = entre.nextLine();
-        Abonne abonne = abonneRepository.getAbonne(email);
+        Abonne abon = abonneRepository.getElement(email);
         if(abonne!=null)
         {
-            abonneRepository.delete(abonne);
+           if(!abon.getEmail().equals(abonne.getEmail()))
+           {
+               repository.delete(abon);
+           }
+           else
+           {
+               System.out.println("Veillez vous desabonné");
+           }
         }
     }
-
+    //afficher la liste des abonnés par l'admin
     public void afficherAbonne()
     {
-        ArrayNode abonneArray = abonneRepository.getAllAbonnes();
+        ArrayNode abonneArray = abonneRepository.getAllElements();
         int i = 1;
         for(JsonNode node: abonneArray)
         {
@@ -72,7 +80,7 @@ public class AdminServiceImpl extends NotificationServiceImpl {
             i++;
         }
     }
-
+    //pour que l'admin se desactive
     public void seDesabonner(Abonne e) throws MessagingException, UnsupportedEncodingException {
         System.out.println("Veuillez choisir un nouveau admin avant de quitter");
         System.out.print("Email du nouveau admin : ");
@@ -109,14 +117,14 @@ public class AdminServiceImpl extends NotificationServiceImpl {
         // se desabonner
         super.seDesabonner(e);
     }
-
+    //verifier si un abonné est admin
     public void verifierAbonnement()
     {
         System.out.println("Saisissez l'email");
         String email = entre.nextLine();
-        if(repository.getAbonne(email)!=null)
+        if(repository.getElement(email)!=null)
         {
-            Abonne abonne = repository.getAbonne(email);
+            Abonne abonne = repository.getElement(email);
             System.out.println("Nom: "+abonne.getNom());
             System.out.println("Prenom: "+abonne.getPrenom());
             System.out.println("Email: "+abonne.getEmail());

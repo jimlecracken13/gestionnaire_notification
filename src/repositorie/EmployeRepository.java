@@ -55,7 +55,7 @@ public class EmployeRepository {
 
     }
 
-    //recupère un employé à travers son email et son mot de passe
+    //recupèrer un employé à travers son email et son mot de passe
     public Employe getEmploye(String email, String motDePasse)
     {
         Employe em = null;

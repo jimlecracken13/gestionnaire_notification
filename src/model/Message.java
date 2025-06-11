@@ -1,10 +1,7 @@
 package model;
 
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -28,10 +25,7 @@ public class Message {
         this.message = message;
         this.date = date;
         this.time = time;
-        this.currentdate = null; // inutilisé dans ce cas
-    }
-    public LocalDateTime getCurrentdate() {
-        return currentdate;
+        this.currentdate = null; //pas besoin
     }
 
 
@@ -39,19 +33,12 @@ public class Message {
         return message;
     }
 
-
     public String  getDate() {
       return date;
     }
+
     public String getTime(){
         return time ;
     }
-    public void setDate(String date)
-    {
-        this.date = date;
-    }
-    public void setTime(String time)
-    {
-        this.time = time;
-    }
+
 }
