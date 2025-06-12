@@ -118,4 +118,5 @@ public class NotificationServiceImpl implements Subject
             System.out.println("Veillez vous abonnez");
         }
     }
+
 }

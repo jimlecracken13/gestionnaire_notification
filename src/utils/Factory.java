@@ -2,6 +2,7 @@ package utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import interfaces.IFactory;
 import model.Abonne;
 import model.Message;
 
@@ -12,8 +13,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Factory {
-    static public Abonne abonneFactory(JsonNode node)
+public class Factory implements IFactory {
+    public Object create(JsonNode node)
     {
         String email = node.get("email").asText();
         String nom = node.get("nom").asText();
@@ -48,4 +49,5 @@ public class Factory {
         abonne.setDebutAbonnement(dateDebut);
         return abonne;
     }
+
 }
