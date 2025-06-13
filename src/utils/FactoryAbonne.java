@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Factory implements IFactory {
+public class FactoryAbonne implements IFactory {
     public Object create(JsonNode node)
     {
         String email = node.get("email").asText();

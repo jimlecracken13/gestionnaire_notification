@@ -9,7 +9,7 @@ import interfaces.Observer;
 import model.Abonne;
 import model.Employe;
 import model.Message;
-import utils.Factory;
+import utils.FactoryAbonne;
 
 import java.io.File;
 import java.io.IOException;
@@ -133,7 +133,7 @@ public class AbonneRepository implements IAbonneRepository {
             if(node.get("employé").get("email").asText().equals(email))
             {
                 JsonNode employe = node.get("employé");
-                return Factory.abonneFactory(employe);
+                return FactoryAbonne.abonneFactory(employe);
             }
         }
         return null;

@@ -13,7 +13,7 @@ import jakarta.mail.SendFailedException;
 import model.Abonne;
 import model.Message;
 import repositorie.AbonneRepository;
-import utils.Factory;
+import utils.FactoryAbonne;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -47,7 +47,9 @@ public class NotificationServiceImpl implements Subject
             //exclure l'expeditaire
             if(!employeNode.get("email").asText().equals(e.getEmail()))
             {
-                abonnes.add(Factory.abonneFactory(employeNode));
+
+                FactoryAbonne factoryAbonne = new FactoryAbonne();
+                abonnes.add((Abonne) factoryAbonne.create(employeNode));
             }
         }
 

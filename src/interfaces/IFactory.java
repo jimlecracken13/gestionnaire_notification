@@ -1,5 +1,7 @@
 package interfaces;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public interface IFactory {
-    Object create();
+    Object create(JsonNode node);
 }
