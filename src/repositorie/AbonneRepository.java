@@ -10,6 +10,7 @@ import model.Abonne;
 import model.Employe;
 import model.Message;
 import utils.FactoryAbonne;
+import utils.FactoryEmploye;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +22,7 @@ import java.util.Locale;
 public class AbonneRepository implements IAbonneRepository {
     ObjectMapper mapper = new ObjectMapper();
     File file = new File("database.json");
+    FactoryAbonne factoryAbonne = new FactoryAbonne();
 
     //recupérer tous les abonnés
     public ArrayNode getAllElements() {
@@ -133,7 +135,7 @@ public class AbonneRepository implements IAbonneRepository {
             if(node.get("employé").get("email").asText().equals(email))
             {
                 JsonNode employe = node.get("employé");
-                return FactoryAbonne.abonneFactory(employe);
+                return (Abonne) factoryAbonne.create(employe);
             }
         }
         return null;

@@ -30,6 +30,7 @@ public class AdminServiceImpl extends NotificationServiceImpl {
             i++;
         }
     }
+
     //pour ajouter un abonné par admin
     public void ajouterAbonne()
     {
@@ -47,6 +48,7 @@ public class AdminServiceImpl extends NotificationServiceImpl {
         }
 
     }
+
     //pour retirer un abonné par l'admin
     public void retirerAbonne(Abonne abonne)
     {
@@ -65,6 +67,7 @@ public class AdminServiceImpl extends NotificationServiceImpl {
            }
         }
     }
+
     //afficher la liste des abonnés par l'admin
     public void afficherAbonne()
     {
@@ -80,6 +83,7 @@ public class AdminServiceImpl extends NotificationServiceImpl {
             i++;
         }
     }
+
     //pour que l'admin se desactive
     public void seDesabonner(Abonne e) throws MessagingException, UnsupportedEncodingException {
         System.out.println("Veuillez choisir un nouveau admin avant de quitter");
@@ -117,6 +121,7 @@ public class AdminServiceImpl extends NotificationServiceImpl {
         // se desabonner
         super.seDesabonner(e);
     }
+
     //verifier si un abonné est admin
     public void verifierAbonnement()
     {
