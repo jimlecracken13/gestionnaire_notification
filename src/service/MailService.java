@@ -7,25 +7,29 @@ import jakarta.mail.internet.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
 import java.util.Properties;
 
 public class MailService {
-    //on charge les properties
-    Properties config = new Properties();
-    InputStream input = MailService.class.getClassLoader().getResourceAsStream("resources.properties");
-    public void configLoader()
+    //on charge properties
+    static Properties config = new Properties();
+
+
+    static
     {
-        try {
+        try(InputStream input = MailService.class.getClassLoader().getResourceAsStream("resources.properties")) {
+            if(input==null)
+            {
+                throw new RuntimeException("fichier de configuration non trouvé");
+            }
             config.load(input);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    // L’email de l'application
-    private final String expediteur = "notifplusapp@gmail.com";
-    private final String motDePasse = "txjkmukvfznvxkvo";
 
+    // L’email de l'application
+    private final String expediteur = config.getProperty("expediter");
+    private final String motDePasse = config.getProperty("motDePasse");
     public void envoyerEmail(String nomExpediteur, String destinataire, String sujet, String contenu) throws UnsupportedEncodingException, MessagingException {
         Properties props = new Properties();
        /*
